@@ -6,6 +6,7 @@ package spaceinvaders.sprites;
  * and open the template in the editor.
  */
 
+import spaceinvaders.sound.Sound;
 import spaceinvaders.util.ImageLoader;
 
 import java.awt.image.BufferedImage;
@@ -22,6 +23,11 @@ public class Shot extends Sprite {
         initShot(x, y);
     }
 
+    @Override
+    public void die() {
+        super.die();
+    }
+
     private void initShot(int x, int y) {
         setImage(SHOT_IMAGE);
         width *= 2;
@@ -32,5 +38,6 @@ public class Shot extends Sprite {
 
         int V_SPACE = 1;
         setY(y - V_SPACE);
+        Sound.SHOOT.play();
     }
 }

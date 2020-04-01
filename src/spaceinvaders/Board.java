@@ -6,6 +6,7 @@ package spaceinvaders;
  * and open the template in the editor.
  */
 
+import spaceinvaders.sound.Sound;
 import spaceinvaders.sprites.Alien;
 import spaceinvaders.sprites.Bomb;
 import spaceinvaders.sprites.Player;
@@ -42,10 +43,14 @@ public class Board extends JPanel {
     private int deaths = 0;
 
     private boolean inGame = true;
-
     private String message = "Game Over";
-
     private Timer timer;
+
+    private final long nextMoveInterval = 50;
+    private long lastMove = System.currentTimeMillis();
+    private int moves = 0;
+    private Sound[] moveSounds = new Sound[] {Sound.INVADER1, Sound.INVADER2, Sound.INVADER3, Sound.INVADER4};
+
 
 
     public Board() {
@@ -99,6 +104,7 @@ public class Board extends JPanel {
         }
 
         if (player.isDying()) {
+            Sound.EXPLOSION.play();
             player.setLives(player.getLives() - 1);
             if (player.getLives() < 1){
                 player.die();
@@ -109,8 +115,6 @@ public class Board extends JPanel {
             }
             player.setDying(false);
             player.reset();
-
-
         }
     }
 
@@ -205,6 +209,7 @@ public class Board extends JPanel {
 
                         alien.setImage(ImageLoader.loadImage("/images/explosion.png"));
                         alien.setDying(true);
+                        Sound.DEATH.play();
                         deaths++;
                         shot.die();
                     }
@@ -264,15 +269,13 @@ public class Board extends JPanel {
         }
     }
 
-    private final long nextMoveInterval = 50;
-    private long lastMove = System.currentTimeMillis();
-
     private void moveAliens() {
         if (System.currentTimeMillis() - lastMove < getAliveCount() * nextMoveInterval) {
             return;
         }
 
         lastMove = System.currentTimeMillis();
+        moveSounds[moves++ % 4].play();
         for (Alien alien : aliens) {
             int x = alien.getX();
 

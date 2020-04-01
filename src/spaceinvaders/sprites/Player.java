@@ -21,13 +21,13 @@ public class Player extends Sprite {
 
     public Player() {
         initPlayer();
+        lives = 3;
     }
 
     private void initPlayer() {
         setImage(ImageLoader.loadImage("/images/player.png"));
         width = Commons.PLAYER_WIDTH;
         height *= 2;
-        lives = 3;
         setX(START_X);
         setY(START_Y);
     }
@@ -78,8 +78,6 @@ public class Player extends Sprite {
 
     public void reset() {
         setVisible(true);
-        setX(START_X);
-        setY(START_Y);
-        setImage(ImageLoader.loadImage("/resources/player.png"));
+        initPlayer();
     }
 }
