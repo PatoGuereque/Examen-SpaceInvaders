@@ -10,10 +10,6 @@ package spaceinvaders;
  *
  * @author antoniomejorado
  */
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 public class Alien extends Sprite {
 
@@ -26,12 +22,12 @@ public class Alien extends Sprite {
     private void initAlien(int x, int y) {
         this.x = x;
         this.y = y;
+        height *= 2;
+        width *= 2;
 
         bomb = new Bomb(x, y);
         setImage(loadImage("/resources/alien.png"));
     }
-
-
 
     public void act(int direction) {
         this.x += direction;
@@ -47,6 +43,8 @@ public class Alien extends Sprite {
 
         public Bomb(int x, int y) {
             initBomb(x, y);
+            width *= 2;
+            height *= 2;
         }
 
         private void initBomb(int x, int y) {

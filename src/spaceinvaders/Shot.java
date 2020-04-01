@@ -10,21 +10,19 @@ package spaceinvaders;
  *
  * @author antoniomejorado
  */
-import javax.swing.ImageIcon;
 
 public class Shot extends Sprite {
 
-    public Shot() {
-    }
+    public Shot() { }
 
     public Shot(int x, int y) {
-
         initShot(x, y);
     }
 
     private void initShot(int x, int y) {
-
         setImage(loadImage("/resources/shot.png"));
+        width *= 2;
+        height *= 2;
 
         int H_SPACE = 6;
         setX(x + H_SPACE);

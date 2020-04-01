@@ -11,7 +11,6 @@ package spaceinvaders;
  * @author antoniomejorado
  */
 
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.awt.Color;
@@ -47,7 +46,6 @@ public class Board extends JPanel {
 
 
     public Board() {
-
         initBoard();
         gameInit();
     }
@@ -70,9 +68,8 @@ public class Board extends JPanel {
 
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++) {
-
-                Alien alien = new Alien(Commons.ALIEN_INIT_X + 18 * j,
-                        Commons.ALIEN_INIT_Y + 18 * i);
+                Alien alien = new Alien(Commons.ALIEN_INIT_X + 36 * j,
+                        Commons.ALIEN_INIT_Y + 36 * i);
                 aliens.add(alien);
             }
         }
@@ -84,7 +81,7 @@ public class Board extends JPanel {
     private void drawAliens(Graphics g) {
         for (Alien alien : aliens) {
             if (alien.isVisible()) {
-                g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
+                g.drawImage(alien.getImage(), alien.getX(), alien.getY(), alien.getWidth(), alien.getHeight(), this);
             }
 
             if (alien.isDying()) {
@@ -95,7 +92,7 @@ public class Board extends JPanel {
 
     private void drawPlayer(Graphics g) {
         if (player.isVisible()) {
-            g.drawImage(player.getImage(), player.getX(), player.getY(), this);
+            g.drawImage(player.getImage(), player.getX(), player.getY(), player.getWidth(), player.getHeight(), this);
         }
 
         if (player.isDying()) {
@@ -106,7 +103,7 @@ public class Board extends JPanel {
 
     private void drawShot(Graphics g) {
         if (shot.isVisible()) {
-            g.drawImage(shot.getImage(), shot.getX(), shot.getY(), this);
+            g.drawImage(shot.getImage(), shot.getX(), shot.getY(), shot.getWidth(), shot.getHeight(), this);
         }
     }
 
@@ -115,7 +112,7 @@ public class Board extends JPanel {
             Alien.Bomb b = a.getBomb();
 
             if (!b.isDestroyed()) {
-                g.drawImage(b.getImage(), b.getX(), b.getY(), this);
+                g.drawImage(b.getImage(), b.getX(), b.getY(), b.getWidth(), b.getHeight(), this);
             }
         }
     }
@@ -244,7 +241,7 @@ public class Board extends JPanel {
 
             if (alien.isVisible()) {
                 int y = alien.getY();
-
+                
                 if (y > Commons.GROUND - Commons.ALIEN_HEIGHT) {
                     inGame = false;
                     message = "Invasion!";
@@ -258,12 +255,10 @@ public class Board extends JPanel {
         Random generator = new Random();
 
         for (Alien alien : aliens) {
-
             int shot = generator.nextInt(15);
             Alien.Bomb bomb = alien.getBomb();
 
             if (shot == Commons.CHANCE && alien.isVisible() && bomb.isDestroyed()) {
-
                 bomb.setDestroyed(false);
                 bomb.setX(alien.getX());
                 bomb.setY(alien.getY());
@@ -275,7 +270,6 @@ public class Board extends JPanel {
             int playerY = player.getY();
 
             if (player.isVisible() && !bomb.isDestroyed()) {
-
                 if (bombX >= (playerX)
                         && bombX <= (playerX + Commons.PLAYER_WIDTH)
                         && bombY >= (playerY)
@@ -288,11 +282,9 @@ public class Board extends JPanel {
             }
 
             if (!bomb.isDestroyed()) {
-
                 bomb.setY(bomb.getY() + 1);
 
                 if (bomb.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT) {
-
                     bomb.setDestroyed(true);
                 }
             }
@@ -300,7 +292,6 @@ public class Board extends JPanel {
     }
 
     private void doGameCycle() {
-
         update();
         repaint();
     }
@@ -309,7 +300,6 @@ public class Board extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
             doGameCycle();
         }
     }
@@ -318,7 +308,6 @@ public class Board extends JPanel {
 
         @Override
         public void keyReleased(KeyEvent e) {
-
             player.keyReleased(e);
         }
 
@@ -328,15 +317,11 @@ public class Board extends JPanel {
             
             int x = player.getX();
             int y = player.getY();
-
             int key = e.getKeyCode();
 
             if (key == KeyEvent.VK_SPACE) {
-
                 if (inGame) {
-
                     if (!shot.isVisible()) {
-
                         shot = new Shot(x, y);
                     }
                 }
