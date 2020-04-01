@@ -6,13 +6,13 @@ package spaceinvaders;
  * and open the template in the editor.
  */
 
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+
 /**
  *
  * @author antoniomejorado
  */
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-
 public class SpaceInvaders extends JFrame  {
 
     public SpaceInvaders() {

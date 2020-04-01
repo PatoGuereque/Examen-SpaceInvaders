@@ -6,10 +6,11 @@ package spaceinvaders;
  * and open the template in the editor.
  */
 
-/**
- *
- * @author antoniomejorado
- */
+import spaceinvaders.sprites.Alien;
+import spaceinvaders.sprites.Bomb;
+import spaceinvaders.sprites.Player;
+import spaceinvaders.sprites.Shot;
+import spaceinvaders.util.ImageLoader;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -28,6 +29,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author antoniomejorado
+ */
 public class Board extends JPanel {
 
     private Dimension d;
@@ -109,7 +113,7 @@ public class Board extends JPanel {
 
     private void drawBombing(Graphics g) {
         for (Alien a : aliens) {
-            Alien.Bomb b = a.getBomb();
+            Bomb b = a.getBomb();
 
             if (!b.isDestroyed()) {
                 g.drawImage(b.getImage(), b.getX(), b.getY(), b.getWidth(), b.getHeight(), this);
@@ -190,7 +194,7 @@ public class Board extends JPanel {
                             && shotY >= (alienY)
                             && shotY <= (alienY + Commons.ALIEN_HEIGHT)) {
 
-                        alien.setImage(alien.loadImage("/resources/explosion.png"));
+                        alien.setImage(ImageLoader.loadImage("/resources/explosion.png"));
                         alien.setDying(true);
                         deaths++;
                         shot.die();
@@ -241,7 +245,7 @@ public class Board extends JPanel {
 
             if (alien.isVisible()) {
                 int y = alien.getY();
-                
+
                 if (y > Commons.GROUND - Commons.ALIEN_HEIGHT) {
                     inGame = false;
                     message = "Invasion!";
@@ -256,7 +260,7 @@ public class Board extends JPanel {
 
         for (Alien alien : aliens) {
             int shot = generator.nextInt(15);
-            Alien.Bomb bomb = alien.getBomb();
+            Bomb bomb = alien.getBomb();
 
             if (shot == Commons.CHANCE && alien.isVisible() && bomb.isDestroyed()) {
                 bomb.setDestroyed(false);
@@ -275,7 +279,7 @@ public class Board extends JPanel {
                         && bombY >= (playerY)
                         && bombY <= (playerY + Commons.PLAYER_HEIGHT)) {
 
-                    player.setImage(player.loadImage("/resources/explosion.png"));
+                    player.setImage(ImageLoader.loadImage("/resources/explosion.png"));
                     player.setDying(true);
                     bomb.setDestroyed(true);
                 }
@@ -314,7 +318,7 @@ public class Board extends JPanel {
         @Override
         public void keyPressed(KeyEvent e) {
             player.keyPressed(e);
-            
+
             int x = player.getX();
             int y = player.getY();
             int key = e.getKeyCode();

@@ -1,4 +1,4 @@
-package spaceinvaders;
+package spaceinvaders.sprites;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -14,17 +14,17 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class Sprite {
+public abstract class Sprite {
 
-    private boolean visible;
     private BufferedImage image;
+    private boolean visible;
     private boolean dying;
 
-    int x;
-    int y;
-    int dx;
-    int height;
-    int width;
+    protected int x;
+    protected int y;
+    protected int dx;
+    protected int height;
+    protected int width;
 
     public Sprite() {
         visible = true;
@@ -50,17 +50,6 @@ public class Sprite {
 
     public BufferedImage getImage() {
         return image;
-    }
-
-    protected BufferedImage loadImage(String path) {
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(getClass().getResource(path));
-        } catch (IOException ioe) {
-            System.out.println("Error loading image " + path + ioe.toString());
-            System.exit(1);
-        }
-        return img;
     }
 
     public void setX(int x) {

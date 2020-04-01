@@ -1,4 +1,4 @@
-package spaceinvaders;
+package spaceinvaders.sprites;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -6,11 +6,11 @@ package spaceinvaders;
  * and open the template in the editor.
  */
 
+import spaceinvaders.util.ImageLoader;
+
 /**
- *
  * @author antoniomejorado
  */
-
 public class Shot extends Sprite {
 
     public Shot() { }
@@ -20,7 +20,7 @@ public class Shot extends Sprite {
     }
 
     private void initShot(int x, int y) {
-        setImage(loadImage("/resources/shot.png"));
+        setImage(ImageLoader.loadImage("/resources/shot.png"));
         width *= 2;
         height *= 2;
 
