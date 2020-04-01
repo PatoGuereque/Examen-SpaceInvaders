@@ -8,11 +8,14 @@ package spaceinvaders.sprites;
 
 import spaceinvaders.util.ImageLoader;
 
+import java.awt.image.BufferedImage;
+
 /**
  * @author antoniomejorado
  */
 public class Alien extends Sprite {
 
+    private final static BufferedImage ALIEN_IMAGE = ImageLoader.loadImage("/resources/alien.png");
     private Bomb bomb;
 
     public Alien(int x, int y) {
@@ -26,7 +29,7 @@ public class Alien extends Sprite {
         width *= 2;
 
         bomb = new Bomb(x, y);
-        setImage(ImageLoader.loadImage("/resources/alien.png"));
+        setImage(ALIEN_IMAGE);
     }
 
     public void act(int direction) {

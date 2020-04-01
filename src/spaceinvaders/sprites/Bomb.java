@@ -2,8 +2,11 @@ package spaceinvaders.sprites;
 
 import spaceinvaders.util.ImageLoader;
 
+import java.awt.image.BufferedImage;
+
 public class Bomb extends Sprite {
 
+    private final static BufferedImage BOMB_IMAGE = ImageLoader.loadImage("/resources/bomb.png");
     private boolean destroyed;
 
     public Bomb(int x, int y) {
@@ -17,7 +20,7 @@ public class Bomb extends Sprite {
 
         this.x = x;
         this.y = y;
-        setImage(ImageLoader.loadImage("/resources/bomb.png"));
+        setImage(BOMB_IMAGE);
     }
 
     public void setDestroyed(boolean destroyed) {
