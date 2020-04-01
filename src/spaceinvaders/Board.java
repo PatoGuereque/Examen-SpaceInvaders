@@ -99,8 +99,18 @@ public class Board extends JPanel {
         }
 
         if (player.isDying()) {
-            player.die();
-            inGame = false;
+            player.setLives(player.getLives() - 1);
+            if (player.getLives() < 1){
+                player.die();
+                inGame = false;
+            }
+            for(Alien alien : aliens){
+                alien.getBomb().setDestroyed(true);
+            }
+            player.setDying(false);
+            player.reset();
+
+
         }
     }
 
