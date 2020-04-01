@@ -15,6 +15,9 @@ import java.awt.event.KeyEvent;
  * @author antoniomejorado
  */
 public class Player extends Sprite {
+    private int lives;
+    private int START_X = 270;
+    private int START_Y = 560;
 
     public Player() {
         initPlayer();
@@ -24,11 +27,8 @@ public class Player extends Sprite {
         setImage(ImageLoader.loadImage("/resources/player.png"));
         width = Commons.PLAYER_WIDTH;
         height *= 2;
-
-        int START_X = 270;
+        lives = 3;
         setX(START_X);
-
-        int START_Y = 560;
         setY(START_Y);
     }
 
@@ -66,5 +66,20 @@ public class Player extends Sprite {
         if (key == KeyEvent.VK_RIGHT) {
             dx = 0;
         }
+    }
+    
+    public int getLives(){
+        return this.lives;
+    }
+    
+    public void setLives(int lives){
+        this.lives = lives;
+    }
+
+    public void reset() {
+        setVisible(true);
+        setX(START_X);
+        setY(START_Y);
+        setImage(ImageLoader.loadImage("/resources/player.png"));
     }
 }
