@@ -25,7 +25,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -169,7 +168,7 @@ public class Board extends JPanel {
                 Commons.BOARD_WIDTH / 2);
     }
 
-    private void update() {
+    private void tick() {
         if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
             inGame = false;
             timer.stop();
@@ -177,7 +176,7 @@ public class Board extends JPanel {
         }
 
         // player
-        player.act();
+        player.tick();
 
         // shot
         if (shot.isVisible()) {
@@ -219,30 +218,22 @@ public class Board extends JPanel {
 
             if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && direction != -1) {
                 direction = -1;
-                Iterator<Alien> i1 = aliens.iterator();
 
-                while (i1.hasNext()) {
-                    Alien a2 = i1.next();
+                for (Alien a2 : aliens) {
                     a2.setY(a2.getY() + Commons.GO_DOWN);
                 }
             }
 
             if (x <= Commons.BORDER_LEFT && direction != 1) {
                 direction = 1;
-                Iterator<Alien> i2 = aliens.iterator();
 
-                while (i2.hasNext()) {
-                    Alien a = i2.next();
+                for (Alien a : aliens) {
                     a.setY(a.getY() + Commons.GO_DOWN);
                 }
             }
         }
 
-        Iterator<Alien> it = aliens.iterator();
-
-        while (it.hasNext()) {
-            Alien alien = it.next();
-
+        for (Alien alien : aliens) {
             if (alien.isVisible()) {
                 int y = alien.getY();
 
@@ -296,7 +287,7 @@ public class Board extends JPanel {
     }
 
     private void doGameCycle() {
-        update();
+        tick();
         repaint();
     }
 

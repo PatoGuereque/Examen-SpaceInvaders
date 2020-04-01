@@ -32,7 +32,7 @@ public class Player extends Sprite {
         setY(START_Y);
     }
 
-    public void act() {
+    public void tick() {
         x += dx;
 
         if (x <= 2) {
