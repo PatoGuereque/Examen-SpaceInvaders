@@ -193,7 +193,7 @@ public class Board extends JPanel {
                             && shotY >= (alienY)
                             && shotY <= (alienY + Commons.ALIEN_HEIGHT)) {
 
-                        alien.setImage(ImageLoader.loadImage("/resources/explosion.png"));
+                        alien.setImage(ImageLoader.loadImage("/images/explosion.png"));
                         alien.setDying(true);
                         deaths++;
                         shot.die();
@@ -202,9 +202,9 @@ public class Board extends JPanel {
             }
 
             int y = shot.getY();
-            y -= 4;
+            y -= 8;
 
-            if (y < 0) {
+             if (y < 0) {
                 shot.die();
             } else {
                 shot.setY(y);
@@ -212,7 +212,57 @@ public class Board extends JPanel {
         }
 
         // aliens
+        moveAliens();
 
+        // bombs
+        Random generator = new Random();
+
+        for (Alien alien : aliens) {
+            int shot = generator.nextInt(Math.max(Commons.CHANCE * getAliveCount(), 1));
+            Bomb bomb = alien.getBomb();
+
+            if (shot == 1 && alien.isVisible() && bomb.isDestroyed()) {
+                bomb.setDestroyed(false);
+                bomb.setX(alien.getX());
+                bomb.setY(alien.getY());
+            }
+
+            int bombX = bomb.getX();
+            int bombY = bomb.getY();
+            int playerX = player.getX();
+            int playerY = player.getY();
+
+            if (player.isVisible() && !bomb.isDestroyed()) {
+                if (bombX >= (playerX)
+                        && bombX <= (playerX + Commons.PLAYER_WIDTH)
+                        && bombY >= (playerY)
+                        && bombY <= (playerY + Commons.PLAYER_HEIGHT)) {
+
+                    player.setImage(ImageLoader.loadImage("/images/explosion.png"));
+                    player.setDying(true);
+                    bomb.setDestroyed(true);
+                }
+            }
+
+            if (!bomb.isDestroyed()) {
+                bomb.setY(bomb.getY() + 2);
+
+                if (bomb.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT) {
+                    bomb.setDestroyed(true);
+                }
+            }
+        }
+    }
+
+    private final long nextMoveInterval = 50;
+    private long lastMove = System.currentTimeMillis();
+
+    private void moveAliens() {
+        if (System.currentTimeMillis() - lastMove < getAliveCount() * nextMoveInterval) {
+            return;
+        }
+
+        lastMove = System.currentTimeMillis();
         for (Alien alien : aliens) {
             int x = alien.getX();
 
@@ -242,48 +292,19 @@ public class Board extends JPanel {
                     message = "Invasion!";
                 }
 
-                alien.act(direction);
+                alien.move(direction * alien.getWidth());
             }
         }
+    }
 
-        // bombs
-        Random generator = new Random();
-
+    private int getAliveCount() {
+        int alive = 0;
         for (Alien alien : aliens) {
-            int shot = generator.nextInt(15);
-            Bomb bomb = alien.getBomb();
-
-            if (shot == Commons.CHANCE && alien.isVisible() && bomb.isDestroyed()) {
-                bomb.setDestroyed(false);
-                bomb.setX(alien.getX());
-                bomb.setY(alien.getY());
-            }
-
-            int bombX = bomb.getX();
-            int bombY = bomb.getY();
-            int playerX = player.getX();
-            int playerY = player.getY();
-
-            if (player.isVisible() && !bomb.isDestroyed()) {
-                if (bombX >= (playerX)
-                        && bombX <= (playerX + Commons.PLAYER_WIDTH)
-                        && bombY >= (playerY)
-                        && bombY <= (playerY + Commons.PLAYER_HEIGHT)) {
-
-                    player.setImage(ImageLoader.loadImage("/resources/explosion.png"));
-                    player.setDying(true);
-                    bomb.setDestroyed(true);
-                }
-            }
-
-            if (!bomb.isDestroyed()) {
-                bomb.setY(bomb.getY() + 1);
-
-                if (bomb.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT) {
-                    bomb.setDestroyed(true);
-                }
+            if (alien.isVisible()) {
+                alive++;
             }
         }
+        return alive;
     }
 
     private void doGameCycle() {

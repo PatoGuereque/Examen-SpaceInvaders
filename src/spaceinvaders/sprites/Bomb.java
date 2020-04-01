@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 public class Bomb extends Sprite {
 
-    private final static BufferedImage BOMB_IMAGE = ImageLoader.loadImage("/resources/bomb.png");
+    private final static BufferedImage BOMB_IMAGE = ImageLoader.loadImage("/images/bomb.png");
     private boolean destroyed;
 
     public Bomb(int x, int y) {

@@ -15,7 +15,7 @@ import java.awt.image.BufferedImage;
  */
 public class Alien extends Sprite {
 
-    private final static BufferedImage ALIEN_IMAGE = ImageLoader.loadImage("/resources/alien.png");
+    private final static BufferedImage ALIEN_IMAGE = ImageLoader.loadImage("/images/alien.png");
     private Bomb bomb;
 
     public Alien(int x, int y) {
@@ -32,7 +32,7 @@ public class Alien extends Sprite {
         setImage(ALIEN_IMAGE);
     }
 
-    public void act(int direction) {
+    public void move(int direction) {
         this.x += direction;
     }
 

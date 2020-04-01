@@ -21,7 +21,7 @@ public class Player extends Sprite {
     }
 
     private void initPlayer() {
-        setImage(ImageLoader.loadImage("/resources/player.png"));
+        setImage(ImageLoader.loadImage("/images/player.png"));
         width = Commons.PLAYER_WIDTH;
         height *= 2;
 

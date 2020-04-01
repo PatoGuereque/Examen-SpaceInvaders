@@ -8,11 +8,14 @@ package spaceinvaders.sprites;
 
 import spaceinvaders.util.ImageLoader;
 
+import java.awt.image.BufferedImage;
+
 /**
  * @author antoniomejorado
  */
 public class Shot extends Sprite {
 
+    private final static BufferedImage SHOT_IMAGE = ImageLoader.loadImage("/images/shot.png");
     public Shot() { }
 
     public Shot(int x, int y) {
@@ -20,7 +23,7 @@ public class Shot extends Sprite {
     }
 
     private void initShot(int x, int y) {
-        setImage(ImageLoader.loadImage("/resources/shot.png"));
+        setImage(SHOT_IMAGE);
         width *= 2;
         height *= 2;
 
