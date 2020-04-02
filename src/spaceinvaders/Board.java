@@ -6,6 +6,7 @@ package spaceinvaders;
  * and open the template in the editor.
  */
 
+import spaceinvaders.sound.Sound;
 import spaceinvaders.sprites.Alien;
 import spaceinvaders.sprites.Bomb;
 import spaceinvaders.sprites.Player;
@@ -42,10 +43,14 @@ public class Board extends JPanel {
     private int deaths = 0;
 
     private boolean inGame = true;
-
     private String message = "Game Over";
-
     private Timer timer;
+
+    private final long nextMoveInterval = 50;
+    private long lastMove = System.currentTimeMillis();
+    private int moves = 0;
+    private Sound[] moveSounds = new Sound[] {Sound.INVADER1, Sound.INVADER2, Sound.INVADER3, Sound.INVADER4};
+
 
 
     public Board() {
@@ -99,6 +104,7 @@ public class Board extends JPanel {
         }
 
         if (player.isDying()) {
+            Sound.EXPLOSION.play();
             player.setLives(player.getLives() - 1);
             if (player.getLives() < 1){
                 player.die();
@@ -109,8 +115,6 @@ public class Board extends JPanel {
             }
             player.setDying(false);
             player.reset();
-            
-            
         }
     }
 
@@ -203,8 +207,9 @@ public class Board extends JPanel {
                             && shotY >= (alienY)
                             && shotY <= (alienY + Commons.ALIEN_HEIGHT)) {
 
-                        alien.setImage(ImageLoader.loadImage("/resources/explosion.png"));
+                        alien.setImage(ImageLoader.loadImage("/images/explosion.png"));
                         alien.setDying(true);
+                        Sound.DEATH.play();
                         deaths++;
                         shot.die();
                     }
@@ -212,9 +217,9 @@ public class Board extends JPanel {
             }
 
             int y = shot.getY();
-            y -= 4;
+            y -= 8;
 
-            if (y < 0) {
+             if (y < 0) {
                 shot.die();
             } else {
                 shot.setY(y);
@@ -222,7 +227,55 @@ public class Board extends JPanel {
         }
 
         // aliens
+        moveAliens();
 
+        // bombs
+        Random generator = new Random();
+
+        for (Alien alien : aliens) {
+            int shot = generator.nextInt(Math.max(Commons.CHANCE * getAliveCount(), 1));
+            Bomb bomb = alien.getBomb();
+
+            if (shot == 1 && alien.isVisible() && bomb.isDestroyed()) {
+                bomb.setDestroyed(false);
+                bomb.setX(alien.getX());
+                bomb.setY(alien.getY());
+            }
+
+            int bombX = bomb.getX();
+            int bombY = bomb.getY();
+            int playerX = player.getX();
+            int playerY = player.getY();
+
+            if (player.isVisible() && !bomb.isDestroyed()) {
+                if (bombX >= (playerX)
+                        && bombX <= (playerX + Commons.PLAYER_WIDTH)
+                        && bombY >= (playerY)
+                        && bombY <= (playerY + Commons.PLAYER_HEIGHT)) {
+
+                    player.setImage(ImageLoader.loadImage("/images/explosion.png"));
+                    player.setDying(true);
+                    bomb.setDestroyed(true);
+                }
+            }
+
+            if (!bomb.isDestroyed()) {
+                bomb.setY(bomb.getY() + 2);
+
+                if (bomb.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT) {
+                    bomb.setDestroyed(true);
+                }
+            }
+        }
+    }
+
+    private void moveAliens() {
+        if (System.currentTimeMillis() - lastMove < getAliveCount() * nextMoveInterval) {
+            return;
+        }
+
+        lastMove = System.currentTimeMillis();
+        moveSounds[moves++ % 4].play();
         for (Alien alien : aliens) {
             int x = alien.getX();
 
@@ -252,48 +305,19 @@ public class Board extends JPanel {
                     message = "Invasion!";
                 }
 
-                alien.act(direction);
+                alien.move(direction * alien.getWidth());
             }
         }
+    }
 
-        // bombs
-        Random generator = new Random();
-
+    private int getAliveCount() {
+        int alive = 0;
         for (Alien alien : aliens) {
-            int shot = generator.nextInt(15);
-            Bomb bomb = alien.getBomb();
-
-            if (shot == Commons.CHANCE && alien.isVisible() && bomb.isDestroyed()) {
-                bomb.setDestroyed(false);
-                bomb.setX(alien.getX());
-                bomb.setY(alien.getY());
-            }
-
-            int bombX = bomb.getX();
-            int bombY = bomb.getY();
-            int playerX = player.getX();
-            int playerY = player.getY();
-
-            if (player.isVisible() && !bomb.isDestroyed()) {
-                if (bombX >= (playerX)
-                        && bombX <= (playerX + Commons.PLAYER_WIDTH)
-                        && bombY >= (playerY)
-                        && bombY <= (playerY + Commons.PLAYER_HEIGHT)) {
-
-                    player.setImage(ImageLoader.loadImage("/resources/explosion.png"));
-                    player.setDying(true);
-                    bomb.setDestroyed(true);
-                }
-            }
-
-            if (!bomb.isDestroyed()) {
-                bomb.setY(bomb.getY() + 1);
-
-                if (bomb.getY() >= Commons.GROUND - Commons.BOMB_HEIGHT) {
-                    bomb.setDestroyed(true);
-                }
+            if (alien.isVisible()) {
+                alive++;
             }
         }
+        return alive;
     }
 
     private void doGameCycle() {
