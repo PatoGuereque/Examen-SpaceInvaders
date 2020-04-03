@@ -42,4 +42,8 @@ public class Animation {
             }
         }
     }
+
+    public int getIndex() {
+        return index;
+    }
 }

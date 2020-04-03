@@ -15,13 +15,15 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import spaceinvaders.util.Animation;
+import spaceinvaders.util.Assets;
 
 public abstract class Sprite {
 
     private BufferedImage image;
     private boolean visible;
     private boolean dying;
-
+    private Animation explosion;
+    
     protected int x;
     protected int y;
     protected int dx;
@@ -30,6 +32,7 @@ public abstract class Sprite {
 
     public Sprite() {
         visible = true;
+        this.explosion = new Animation(Assets.explosion, 100);
     }
 
     public void die() {
@@ -87,4 +90,11 @@ public abstract class Sprite {
     }
     
     abstract public void render(Graphics g);
+
+    public void renderExplosion(Graphics g) {
+        if(explosion.getIndex()!=4){
+            this.explosion.tick();
+            g.drawImage(explosion.getCurrentFrame(), x, y, getWidth()*2, getHeight()*2, null);
+        }
+    }
 }

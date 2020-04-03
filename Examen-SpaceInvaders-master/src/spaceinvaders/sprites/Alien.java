@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import spaceinvaders.util.ImageLoader;
 
 import java.awt.image.BufferedImage;
+import spaceinvaders.Commons;
 import spaceinvaders.util.Animation;
 import spaceinvaders.util.Assets;
 
@@ -30,8 +31,8 @@ public class Alien extends Sprite {
     private void initAlien(int x, int y) {
         this.x = x;
         this.y = y;
-        height *= 2;
-        width *= 2;
+        height = Commons.ALIEN_HEIGHT;
+        width = Commons.ALIEN_WIDTH;
 
         bomb = new Bomb(x, y);
         setImage(ALIEN_IMAGE);
