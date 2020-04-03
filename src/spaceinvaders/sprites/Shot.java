@@ -6,6 +6,7 @@ package spaceinvaders.sprites;
  * and open the template in the editor.
  */
 
+import java.awt.Graphics;
 import spaceinvaders.sound.Sound;
 import spaceinvaders.util.ImageLoader;
 
@@ -39,5 +40,10 @@ public class Shot extends Sprite {
         int V_SPACE = 1;
         setY(y - V_SPACE);
         Sound.SHOOT.play();
+    }
+
+    @Override
+    public void render(Graphics g) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

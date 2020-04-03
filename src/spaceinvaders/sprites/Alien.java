@@ -6,9 +6,13 @@ package spaceinvaders.sprites;
  * and open the template in the editor.
  */
 
+import java.awt.Graphics;
 import spaceinvaders.util.ImageLoader;
 
 import java.awt.image.BufferedImage;
+import spaceinvaders.Commons;
+import spaceinvaders.util.Animation;
+import spaceinvaders.util.Assets;
 
 /**
  * @author antoniomejorado
@@ -17,16 +21,18 @@ public class Alien extends Sprite {
 
     private final static BufferedImage ALIEN_IMAGE = ImageLoader.loadImage("/images/alien.png");
     private Bomb bomb;
+    public Animation animation;
 
     public Alien(int x, int y) {
+        this.animation = new Animation(Assets.alien, 10);
         initAlien(x, y);
     }
 
     private void initAlien(int x, int y) {
         this.x = x;
         this.y = y;
-        height *= 2;
-        width *= 2;
+        height = Commons.ALIEN_HEIGHT;
+        width = Commons.ALIEN_WIDTH;
 
         bomb = new Bomb(x, y);
         setImage(ALIEN_IMAGE);
@@ -38,5 +44,10 @@ public class Alien extends Sprite {
 
     public Bomb getBomb() {
         return bomb;
+    }
+
+    @Override
+    public void render(Graphics g) {
+        g.drawImage(animation.getCurrentFrame() ,x, y, width, height, null);
     }
 }

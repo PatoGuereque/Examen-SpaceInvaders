@@ -28,6 +28,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import spaceinvaders.util.Assets;
 
 /**
  * @author antoniomejorado
@@ -63,7 +64,7 @@ public class Board extends JPanel {
         setFocusable(true);
         d = new Dimension(Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT);
         setBackground(Color.black);
-
+        Assets.init();
         timer = new Timer(Commons.DELAY, new GameCycle());
         timer.start();
 
@@ -88,11 +89,13 @@ public class Board extends JPanel {
 
     private void drawAliens(Graphics g) {
         for (Alien alien : aliens) {
+            //alien.animation.tick();
             if (alien.isVisible()) {
                 g.drawImage(alien.getImage(), alien.getX(), alien.getY(), alien.getWidth(), alien.getHeight(), this);
             }
 
             if (alien.isDying()) {
+                alien.renderExplosion(g);
                 alien.die();
             }
         }
@@ -105,6 +108,7 @@ public class Board extends JPanel {
 
         if (player.isDying()) {
             Sound.EXPLOSION.play();
+            player.renderExplosion(g);
             player.setLives(player.getLives() - 1);
             if (player.getLives() < 1){
                 player.die();

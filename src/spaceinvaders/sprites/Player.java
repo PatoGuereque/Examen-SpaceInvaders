@@ -6,6 +6,7 @@ package spaceinvaders.sprites;
  * and open the template in the editor.
  */
 
+import java.awt.Graphics;
 import spaceinvaders.Commons;
 import spaceinvaders.util.ImageLoader;
 
@@ -79,5 +80,10 @@ public class Player extends Sprite {
     public void reset() {
         setVisible(true);
         initPlayer();
+    }
+
+    @Override
+    public void render(Graphics g) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
