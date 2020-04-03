@@ -12,17 +12,24 @@ import java.awt.image.BufferedImage;
  * @author insan
  */
 public class Assets {
-    public static BufferedImage sprites;
+    //public static BufferedImage explosionSheet;
     public static BufferedImage explosion[];
+    public static BufferedImage alien[];
     
     
     public static void init(){
-        sprites = ImageLoader.loadImage("/images/spr.Explosion.png");
-        SpriteSheet spritesheet = new SpriteSheet(sprites);
+        SpriteSheet explosionSheet = new SpriteSheet(ImageLoader.loadImage("/images/spr.Explosion.png"));
         explosion = new BufferedImage[5];
         
         for(int i = 0; i < 5; i ++){
-            explosion[i] = spritesheet.crop(i*32, 0, 32, 32);
+            explosion[i] = explosionSheet.crop(i*32, 0, 32, 32);
+        }
+        
+        SpriteSheet alienSheet = new SpriteSheet(ImageLoader.loadImage("/images/spr.Alien.png"));
+        alien = new BufferedImage[5];
+        
+        for(int i = 0; i < 5; i ++){
+            alien[i] = alienSheet.crop(i*32, 0, 32, 32);
         }
     }
 }

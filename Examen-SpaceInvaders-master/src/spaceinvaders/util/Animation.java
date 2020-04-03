@@ -18,6 +18,14 @@ public class Animation {
     private long lastTime;
     private BufferedImage[] frames;
     
+    public Animation(BufferedImage frames[], int speed){
+        this.frames = frames;
+        this.speed = speed;
+        index = 0;
+        timer = 0;
+        lastTime = System.currentTimeMillis();
+    }
+    
     public BufferedImage getCurrentFrame(){
         return frames[index];
     }

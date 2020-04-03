@@ -1,5 +1,6 @@
 package spaceinvaders.sprites;
 
+import java.awt.Graphics;
 import spaceinvaders.util.ImageLoader;
 
 import java.awt.image.BufferedImage;
@@ -29,5 +30,10 @@ public class Bomb extends Sprite {
 
     public boolean isDestroyed() {
         return destroyed;
+    }
+
+    @Override
+    public void render(Graphics g) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

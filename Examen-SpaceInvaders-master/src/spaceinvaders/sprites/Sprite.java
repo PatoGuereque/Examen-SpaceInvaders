@@ -10,9 +10,11 @@ package spaceinvaders.sprites;
  *
  * @author antoniomejorado
  */
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import spaceinvaders.util.Animation;
 
 public abstract class Sprite {
 
@@ -83,4 +85,6 @@ public abstract class Sprite {
     public int getWidth() {
         return width;
     }
+    
+    abstract public void render(Graphics g);
 }
