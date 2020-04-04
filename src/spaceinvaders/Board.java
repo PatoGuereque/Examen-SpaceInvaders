@@ -39,10 +39,13 @@ public class Board extends JComponent {
 
     private final long speed = 5;
     private int direction = -1;
+    private int deaths = 0;
 
     private boolean inGame = true;
     private String message = "Game Over";
     private Timer timer;
+    private long startTime;
+    private int time;
 
     private final long nextMoveInterval = 50;
     private long lastMove = System.currentTimeMillis();
@@ -73,6 +76,7 @@ public class Board extends JComponent {
 
 
     private void gameInit() {
+        startTime = System.currentTimeMillis();
         aliens = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++) {
@@ -133,26 +137,10 @@ public class Board extends JComponent {
     }
 
     private void doDrawing(Graphics2D g) {
-        g.setColor(Color.black);
-        g.fillRect(0, 0, d.width, d.height);
-
+        g.drawImage(Assets.background,0,0, Commons.BOARD_HEIGHT*Assets.background.getWidth()/Assets.background.getHeight(),
+                Commons.BOARD_HEIGHT,null);
         if (inGame) {
-
-            // draw tileable background
-            int backgroundWidth = Assets.background.getWidth();
-            int backgroundHeight = Assets.background.getHeight();
-            for (int x = 0; x < Commons.BOARD_WIDTH + backgroundWidth; x+=backgroundWidth) {
-                for (int y = 0; y < Commons.BOARD_HEIGHT + backgroundHeight; y+= backgroundHeight) {
-                    //g.drawImage(Assets.background, x, y, backgroundWidth, backgroundHeight, null);
-                }
-            }
-
             drawLivesAndAlive(g2d);
-
-            g.setColor(Color.green);
-            g.drawLine(0, Commons.GROUND,
-                    Commons.BOARD_WIDTH, Commons.GROUND);
-
             drawAliens(g);
             drawPlayer(g);
             drawShot(g);
@@ -183,7 +171,9 @@ public class Board extends JComponent {
 
         g.setColor(Color.WHITE);
         // draw the lives and score on the top right of the screen
-        g.drawString("Lives: " + player.getLives() + "❤", Commons.BOARD_WIDTH/2 + 20, 20);
+        g.drawString("Lives: " + player.getLives() + " ❤", Commons.BOARD_WIDTH/2 + 20, 20);
+        g.drawString("Score " + player.getScore(), Commons.BOARD_WIDTH - 200, 20);
+        g.drawString("Time: " + time, 20, 20);
     }
 
     private void gameOver(Graphics g) {
@@ -208,7 +198,11 @@ public class Board extends JComponent {
     }
 
     private void tick() {
-        if (getAliveCount() == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
+        //update time
+        time =(int) (System.currentTimeMillis() - startTime)/1000;
+
+        //check win state
+        if (getAliveCount() == 0) {
             inGame = false;
             timer.stop();
             message = "Game won!";
@@ -238,6 +232,8 @@ public class Board extends JComponent {
 
                         alien.setDying(true);
                         Sound.DEATH.play();
+                        deaths++;
+                        player.setScore(player.getScore() + 50);
                         shot.die();
                     }
                 }
@@ -349,6 +345,14 @@ public class Board extends JComponent {
     private void doGameCycle() {
         tick();
         repaint();
+    }
+
+    public int getTime(){
+        return time;
+    }
+
+    public void setTime(int time){
+        this.time = time;
     }
 
     public List<Alien> getAliens() {

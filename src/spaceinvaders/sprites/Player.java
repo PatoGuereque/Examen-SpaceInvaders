@@ -23,6 +23,7 @@ public class Player extends Sprite {
 
     private final Board game;
     private int lives;
+    private int score;
     private final int START_X = 270;
     private final int START_Y = 560;
     private Animation idle;
@@ -36,6 +37,7 @@ public class Player extends Sprite {
         this.game = game;
         initPlayer();
         lives = 3;
+        score = 0;
     }
 
     private void initPlayer() {
@@ -118,7 +120,15 @@ public class Player extends Sprite {
     public void setLives(int lives){
         this.lives = lives;
     }
-
+    
+    public int getScore(){
+        return this.score;
+    }
+    
+    public void setScore(int score){
+        this.score = score;
+    }
+    
     public void reset() {
         setVisible(true);
         initPlayer();

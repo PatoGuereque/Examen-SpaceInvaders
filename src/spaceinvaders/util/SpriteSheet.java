@@ -13,7 +13,10 @@ import java.awt.image.BufferedImage;
  */
 public class SpriteSheet {
     private BufferedImage sheet;
-    
+    /**
+     * 
+     * @param sheet 
+     */
     public SpriteSheet(BufferedImage sheet){
         this.sheet = sheet;
     }

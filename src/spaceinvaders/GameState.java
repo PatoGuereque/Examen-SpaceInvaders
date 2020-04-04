@@ -55,7 +55,11 @@ public class GameState {
             
             if (line != null) {
                 int lives = Integer.parseInt(line);
+                int score = Integer.parseInt(bufferedReader.readLine());
+                int time = Integer.parseInt(bufferedReader.readLine());
                 game.getPlayer().setLives(lives);
+                game.getPlayer().setScore(score);
+                game.setTime((int) (System.currentTimeMillis()/1000) - time);
             } else {
                 return;
             }
@@ -118,8 +122,10 @@ public class GameState {
     public void save() {
         StringBuilder saveString = new StringBuilder();
         
-        // save score and lives
+        // save lives, Score and time
         saveString.append(game.getPlayer().getLives()).append('\n');
+        saveString.append(game.getPlayer().getScore()).append('\n');
+        saveString.append(game.getTime()).append('\n');
 
         // save player and shot
         saveString.append(serializeObject(game.getPlayer()));
