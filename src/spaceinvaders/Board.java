@@ -75,7 +75,6 @@ public class Board extends JComponent {
 
     private void gameInit() {
         aliens = new ArrayList<>();
-
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++) {
                 Alien alien = new Alien(Commons.ALIEN_INIT_X + 36 * j,
@@ -189,6 +188,7 @@ public class Board extends JComponent {
     }
 
     private void gameOver(Graphics g) {
+        String replay = "Press space to play again"; 
         g.setColor(Color.black);
         g.fillRect(0, 0, Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT);
 
@@ -204,6 +204,8 @@ public class Board extends JComponent {
         g.setFont(small);
         g.drawString(message, (Commons.BOARD_WIDTH - fontMetrics.stringWidth(message)) / 2,
                 Commons.BOARD_WIDTH / 2);
+        g.drawString(replay, (Commons.BOARD_WIDTH - fontMetrics.stringWidth(replay)) / 2,
+                Commons.BOARD_WIDTH / 2 + 40);
     }
 
     private void tick() {
@@ -399,6 +401,11 @@ public class Board extends JComponent {
                     if (!shot.isVisible()) {
                         shot = new Shot(x, y);
                     }
+                }
+                else{
+                    inGame = true;
+                    timer.start();
+                    gameInit();
                 }
             }
 

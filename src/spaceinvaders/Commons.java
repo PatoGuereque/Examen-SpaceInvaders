@@ -14,7 +14,7 @@ public interface Commons {
 
     int BOARD_WIDTH = 716;
     int BOARD_HEIGHT = 700;
-    int BORDER_RIGHT = 30;
+    int BORDER_RIGHT = 50;
     int BORDER_LEFT = 5;
 
     int GROUND = 580;
