@@ -8,9 +8,7 @@ public enum Sound {
     INVADER3("fastinvader3"),
     INVADER4("fastinvader4"),
     SHOOT("shoot"),
-    DEATH("retro_beep_04"),
-    ufo_high("ufo_highpitch"),
-    UFGO_LOW("ufo_lowpitch");
+    DEATH("retro_beep_04");
 
     private SoundClip soundClip;
 
