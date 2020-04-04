@@ -1,6 +1,7 @@
 package spaceinvaders.sprites;
 
-import java.awt.Graphics;
+import java.awt.*;
+
 import spaceinvaders.util.ImageLoader;
 
 import java.awt.image.BufferedImage;
@@ -35,8 +36,8 @@ public class Bomb extends Sprite {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         animation.tick();
-        g.drawImage(animation.getCurrentFrame() ,x, y, width, height, null);
+        render(g, animation);
     }
 }

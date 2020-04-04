@@ -13,18 +13,13 @@ import spaceinvaders.sprites.Player;
 import spaceinvaders.sprites.Shot;
 import spaceinvaders.util.ImageLoader;
 
-import javax.swing.JPanel;
-import javax.swing.Timer;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Toolkit;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -34,13 +29,16 @@ import static spaceinvaders.util.Assets.bomb;
 /**
  * @author antoniomejorado
  */
-public class Board extends JPanel {
+public class Board extends JComponent {
 
+    private BufferedImage scene;
+    private Graphics2D g2d;
     private Dimension d;
     private List<Alien> aliens;
     private Player player;
     private Shot shot;
 
+    private final long speed = 5;
     private int direction = -1;
     private int deaths = 0;
 
@@ -53,14 +51,16 @@ public class Board extends JPanel {
     private int moves = 0;
     private Sound[] moveSounds = new Sound[] {Sound.INVADER1, Sound.INVADER2, Sound.INVADER3, Sound.INVADER4};
 
-
-
     public Board() {
         initBoard();
         gameInit();
     }
 
     private void initBoard() {
+        scene = new BufferedImage(Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT, 1);
+        g2d = scene.createGraphics();
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
         addKeyListener(new TAdapter());
         setFocusable(true);
         d = new Dimension(Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT);
@@ -88,7 +88,7 @@ public class Board extends JPanel {
         shot = new Shot();
     }
 
-    private void drawAliens(Graphics g) {
+    private void drawAliens(Graphics2D g) {
         for (Alien alien : aliens) {
             //alien.animation.tick();
             if (alien.isVisible()) {
@@ -102,7 +102,7 @@ public class Board extends JPanel {
         }
     }
 
-    private void drawPlayer(Graphics g) {
+    private void drawPlayer(Graphics2D g) {
         if (player.isVisible()) {
             //g.drawImage(player.getImage(), player.getX(), player.getY(), player.getWidth(), player.getHeight(), this);
             player.render(g);
@@ -124,14 +124,14 @@ public class Board extends JPanel {
         }
     }
 
-    private void drawShot(Graphics g) {
+    private void drawShot(Graphics2D g) {
         if (shot.isVisible()) {
             //g.drawImage(shot.getImage(), shot.getX(), shot.getY(), shot.getWidth(), shot.getHeight(), this);
             shot.render(g);
         }
     }
 
-    private void drawBombing(Graphics g) {
+    private void drawBombing(Graphics2D g) {
         for (Alien a : aliens) {
             Bomb b = a.getBomb();
 
@@ -142,12 +142,17 @@ public class Board extends JPanel {
     }
 
     @Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        doDrawing(g);
+    public void paint(Graphics g) {
+        super.paint(g);
+
+        g2d.clearRect(0, 0, Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT);
+
+        doDrawing(g2d);
+
+        g.drawImage(scene, 0, 0, this);
     }
 
-    private void doDrawing(Graphics g) {
+    private void doDrawing(Graphics2D g) {
         g.setColor(Color.black);
         g.fillRect(0, 0, d.width, d.height);
         g.setColor(Color.green);
@@ -201,12 +206,12 @@ public class Board extends JPanel {
 
         // shot
         if (shot.isVisible()) {
-            int shotX = shot.getX();
-            int shotY = shot.getY();
+            double shotX = shot.getX();
+            double shotY = shot.getY();
 
             for (Alien alien : aliens) {
-                int alienX = alien.getX();
-                int alienY = alien.getY();
+                double alienX = alien.getX();
+                double alienY = alien.getY();
 
                 if (alien.isVisible() && shot.isVisible()) {
                     if (shotX >= (alienX)
@@ -222,7 +227,7 @@ public class Board extends JPanel {
                 }
             }
 
-            int y = shot.getY();
+            double y = shot.getY();
             y -= 8;
 
              if (y < 0) {
@@ -248,10 +253,10 @@ public class Board extends JPanel {
                 bomb.setY(alien.getY());
             }
 
-            int bombX = bomb.getX();
-            int bombY = bomb.getY();
-            int playerX = player.getX();
-            int playerY = player.getY();
+            double bombX = bomb.getX();
+            double bombY = bomb.getY();
+            double playerX = player.getX();
+            double playerY = player.getY();
 
             if (player.isVisible() && !bomb.isDestroyed()) {
                 if (bombX >= (playerX)
@@ -275,14 +280,14 @@ public class Board extends JPanel {
     }
 
     private void moveAliens() {
-        if (System.currentTimeMillis() - lastMove < getAliveCount() * nextMoveInterval) {
-            return;
+        double move = (double) (((Commons.NUMBER_OF_ALIENS_TO_DESTROY - getAliveCount() + 1)) * speed) / ((double) Commons.ALIEN_WIDTH);
+        if (System.currentTimeMillis() - lastMove > getAliveCount() * nextMoveInterval) {
+            lastMove = System.currentTimeMillis();
+            moveSounds[moves++ % 4].play();
         }
 
-        lastMove = System.currentTimeMillis();
-        moveSounds[moves++ % 4].play();
         for (Alien alien : aliens) {
-            int x = alien.getX();
+            double x = alien.getX();
 
             if (x >= Commons.BOARD_WIDTH - Commons.BORDER_RIGHT && direction != -1) {
                 direction = -1;
@@ -303,14 +308,14 @@ public class Board extends JPanel {
 
         for (Alien alien : aliens) {
             if (alien.isVisible()) {
-                int y = alien.getY();
+                double y = alien.getY();
 
                 if (y > Commons.GROUND - Commons.ALIEN_HEIGHT) {
                     inGame = false;
                     message = "Invasion!";
                 }
 
-                alien.move(direction * alien.getWidth());
+                alien.move((direction * move));
             }
         }
     }
@@ -349,8 +354,8 @@ public class Board extends JPanel {
         public void keyPressed(KeyEvent e) {
             player.keyPressed(e);
 
-            int x = player.getX();
-            int y = player.getY();
+            double x = player.getX();
+            double y = player.getY();
             int key = e.getKeyCode();
 
             if (key == KeyEvent.VK_SPACE) {

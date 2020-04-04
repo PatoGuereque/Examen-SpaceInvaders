@@ -6,7 +6,8 @@ package spaceinvaders.sprites;
  * and open the template in the editor.
  */
 
-import java.awt.Graphics;
+import java.awt.*;
+
 import spaceinvaders.util.ImageLoader;
 
 import java.awt.image.BufferedImage;
@@ -36,7 +37,7 @@ public class Alien extends Sprite {
         height = Commons.ALIEN_HEIGHT;
     }
 
-    public void move(int direction) {
+    public void move(double direction) {
         this.x += direction;
     }
 
@@ -45,8 +46,8 @@ public class Alien extends Sprite {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         animation.tick();
-        g.drawImage(animation.getCurrentFrame() ,x, y, width, height, null);
+        render(g, animation);
     }
 }

@@ -6,7 +6,8 @@ package spaceinvaders.sprites;
  * and open the template in the editor.
  */
 
-import java.awt.Graphics;
+import java.awt.*;
+
 import spaceinvaders.Commons;
 import spaceinvaders.util.ImageLoader;
 
@@ -106,21 +107,21 @@ public class Player extends Sprite {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         //idle
         if(dx == 0){
             idle.tick();
-            g.drawImage(idle.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+            render(g, idle);
         }
         //left
         if(dx == -2){
             left.tick();
-            g.drawImage(left.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+            render(g, left);
         }
         //right
         if(dx == 2){
             right.tick();
-            g.drawImage(right.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+            render(g, right);
         }
     }
 }

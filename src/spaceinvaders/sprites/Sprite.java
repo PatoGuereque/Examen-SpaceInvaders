@@ -10,7 +10,8 @@ package spaceinvaders.sprites;
  *
  * @author antoniomejorado
  */
-import java.awt.Graphics;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -23,11 +24,11 @@ public abstract class Sprite {
     private boolean dying;
     private Animation explosion;
     
-    protected int x;
-    protected int y;
-    protected int dx;
-    protected int height;
-    protected int width;
+    protected double x;
+    protected double y;
+    protected double dx;
+    protected double height;
+    protected double width;
 
     public Sprite() {
         visible = true;
@@ -46,19 +47,19 @@ public abstract class Sprite {
         this.visible = visible;
     }
 
-    public void setX(int x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public void setY(int y) {
+    public void setY(double y) {
         this.y = y;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
@@ -70,20 +71,27 @@ public abstract class Sprite {
         return this.dying;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
     
-    abstract public void render(Graphics g);
+    abstract public void render(Graphics2D g);
 
-    public void renderExplosion(Graphics g) {
+    public void renderExplosion(Graphics2D g) {
         if(explosion.getIndex()!=4){
             this.explosion.tick();
-            g.drawImage(explosion.getCurrentFrame(), x, y, 32, 32, null);
+            render(g, explosion);
         }
+    }
+
+    protected void render(Graphics2D g, Animation animation) {
+        AffineTransform t = new AffineTransform();
+        t.translate(x, y);
+        t.scale(width/animation.getCurrentFrame().getWidth(), height/animation.getCurrentFrame().getHeight()); // scale = 1
+        g.drawImage(animation.getCurrentFrame(), t, null);
     }
 }

@@ -6,7 +6,8 @@ package spaceinvaders.sprites;
  * and open the template in the editor.
  */
 
-import java.awt.Graphics;
+import java.awt.*;
+
 import spaceinvaders.sound.Sound;
 import spaceinvaders.util.ImageLoader;
 
@@ -25,7 +26,7 @@ public class Shot extends Sprite {
         this.animation = new Animation(Assets.shot, 200);
     }
 
-    public Shot(int x, int y) {
+    public Shot(double x, double y) {
         this.animation = new Animation(Assets.shot, 200);
         initShot(x, y);
     }
@@ -35,7 +36,7 @@ public class Shot extends Sprite {
         super.die();
     }
 
-    private void initShot(int x, int y) {
+    private void initShot(double x, double y) {
         width = 30;
         height = 20;
 
@@ -48,8 +49,8 @@ public class Shot extends Sprite {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics2D g) {
         animation.tick();
-        g.drawImage(animation.getCurrentFrame() ,x, y, width, height, null);
+        render(g, animation);
     }
 }
