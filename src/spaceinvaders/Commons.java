@@ -20,8 +20,8 @@ public interface Commons {
     int GROUND = 580;
     int BOMB_HEIGHT = 5;
 
-    int ALIEN_HEIGHT = 24;
-    int ALIEN_WIDTH = 24;
+    int ALIEN_HEIGHT = 32;
+    int ALIEN_WIDTH = 32;
     int ALIEN_INIT_X = 300;
     int ALIEN_INIT_Y = 10;
 
@@ -29,6 +29,6 @@ public interface Commons {
     int NUMBER_OF_ALIENS_TO_DESTROY = 24;
     int CHANCE = 40;
     int DELAY = 17;
-    int PLAYER_WIDTH = 30;
-    int PLAYER_HEIGHT = 20;
+    int PLAYER_WIDTH = 64;
+    int PLAYER_HEIGHT = 64;
 }

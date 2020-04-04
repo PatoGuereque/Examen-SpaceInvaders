@@ -24,18 +24,18 @@ public class Alien extends Sprite {
     public Animation animation;
 
     public Alien(int x, int y) {
-        this.animation = new Animation(Assets.alien, 10);
+        this.animation = new Animation(Assets.alien, 200);
         initAlien(x, y);
     }
 
     private void initAlien(int x, int y) {
         this.x = x;
         this.y = y;
-        height = Commons.ALIEN_HEIGHT;
-        width = Commons.ALIEN_WIDTH;
 
         bomb = new Bomb(x, y);
         setImage(ALIEN_IMAGE);
+        width = Commons.ALIEN_WIDTH;
+        height = Commons.ALIEN_HEIGHT;
     }
 
     public void move(int direction) {
@@ -48,6 +48,7 @@ public class Alien extends Sprite {
 
     @Override
     public void render(Graphics g) {
+        animation.tick();
         g.drawImage(animation.getCurrentFrame() ,x, y, width, height, null);
     }
 }

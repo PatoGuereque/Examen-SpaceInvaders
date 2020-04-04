@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import spaceinvaders.util.Assets;
+import static spaceinvaders.util.Assets.bomb;
 
 /**
  * @author antoniomejorado
@@ -91,7 +92,7 @@ public class Board extends JPanel {
         for (Alien alien : aliens) {
             //alien.animation.tick();
             if (alien.isVisible()) {
-                g.drawImage(alien.getImage(), alien.getX(), alien.getY(), alien.getWidth(), alien.getHeight(), this);
+                alien.render(g);
             }
 
             if (alien.isDying()) {
@@ -103,7 +104,8 @@ public class Board extends JPanel {
 
     private void drawPlayer(Graphics g) {
         if (player.isVisible()) {
-            g.drawImage(player.getImage(), player.getX(), player.getY(), player.getWidth(), player.getHeight(), this);
+            //g.drawImage(player.getImage(), player.getX(), player.getY(), player.getWidth(), player.getHeight(), this);
+            player.render(g);
         }
 
         if (player.isDying()) {
@@ -124,7 +126,8 @@ public class Board extends JPanel {
 
     private void drawShot(Graphics g) {
         if (shot.isVisible()) {
-            g.drawImage(shot.getImage(), shot.getX(), shot.getY(), shot.getWidth(), shot.getHeight(), this);
+            //g.drawImage(shot.getImage(), shot.getX(), shot.getY(), shot.getWidth(), shot.getHeight(), this);
+            shot.render(g);
         }
     }
 
@@ -133,7 +136,7 @@ public class Board extends JPanel {
             Bomb b = a.getBomb();
 
             if (!b.isDestroyed()) {
-                g.drawImage(b.getImage(), b.getX(), b.getY(), b.getWidth(), b.getHeight(), this);
+                b.render(g);
             }
         }
     }

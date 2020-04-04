@@ -11,16 +11,19 @@ import spaceinvaders.sound.Sound;
 import spaceinvaders.util.ImageLoader;
 
 import java.awt.image.BufferedImage;
+import spaceinvaders.util.Animation;
+import spaceinvaders.util.Assets;
 
 /**
  * @author antoniomejorado
  */
 public class Shot extends Sprite {
-
+    public Animation animation;
     private final static BufferedImage SHOT_IMAGE = ImageLoader.loadImage("/images/shot.png");
     public Shot() { }
 
     public Shot(int x, int y) {
+        this.animation = new Animation(Assets.shot, 200);
         initShot(x, y);
     }
 
@@ -31,8 +34,8 @@ public class Shot extends Sprite {
 
     private void initShot(int x, int y) {
         setImage(SHOT_IMAGE);
-        width *= 2;
-        height *= 2;
+        width = 30;
+        height = 20;
 
         int H_SPACE = 6;
         setX(x + H_SPACE);
@@ -44,6 +47,7 @@ public class Shot extends Sprite {
 
     @Override
     public void render(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        animation.tick();
+        g.drawImage(animation.getCurrentFrame() ,x, y, width, height, null);
     }
 }
