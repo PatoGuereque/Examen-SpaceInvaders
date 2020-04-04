@@ -1,0 +1,113 @@
+package spaceinvaders.sprites;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import java.awt.Graphics;
+import spaceinvaders.Commons;
+import spaceinvaders.util.ImageLoader;
+
+import java.awt.event.KeyEvent;
+import spaceinvaders.util.Animation;
+import spaceinvaders.util.Assets;
+
+/**
+ * @author antoniomejorado
+ */
+public class Player extends Sprite {
+    private int lives;
+    private int START_X = 270;
+    private int START_Y = 560;
+    public Animation idle;
+    public Animation left;
+    public Animation right;
+
+    public Player() {
+        initPlayer();
+        lives = 3;
+    }
+
+    private void initPlayer() {
+        setImage(ImageLoader.loadImage("/images/player.png"));
+        width = Commons.PLAYER_WIDTH;
+        height = Commons.PLAYER_HEIGHT;
+        setX(START_X);
+        setY(START_Y);
+        
+        idle = new Animation(Assets.playerIdle, 200);
+        left = new Animation(Assets.playerLeft, 200);
+        right = new Animation(Assets.playerRight,200);
+    }
+
+    public void tick() {
+        x += dx;
+
+        if (x <= 2) {
+            x = 2;
+        }
+
+        if (x >= Commons.BOARD_WIDTH - 2 * width) {
+            x = Commons.BOARD_WIDTH - 2 * width;
+        }
+    }
+
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_LEFT) {
+            dx = -2;
+        }
+
+        if (key == KeyEvent.VK_RIGHT) {
+            dx = 2;
+        }
+    }
+
+    public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_LEFT) {
+            dx = 0;
+        }
+
+        if (key == KeyEvent.VK_RIGHT) {
+            dx = 0;
+        }
+    }
+    
+    public int getLives(){
+        return this.lives;
+    }
+    
+    public void setLives(int lives){
+        this.lives = lives;
+    }
+
+    public void reset() {
+        setVisible(true);
+        initPlayer();
+    }
+
+    @Override
+    public void render(Graphics g) {
+
+        //idle
+        if(dx == 0){
+            idle.tick();
+            g.drawImage(idle.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+        }
+        //left
+        if(dx == -2){
+            left.tick();
+            g.drawImage(left.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+        }
+        //right
+        if(dx == 2){
+            right.tick();
+            g.drawImage(right.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+        }
+    }
+}
