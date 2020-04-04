@@ -138,17 +138,20 @@ public class Board extends JComponent {
         g.setColor(Color.black);
         g.fillRect(0, 0, d.width, d.height);
 
-        int backgroundWidth = Assets.background.getWidth();
-        int backgroundHeight = Assets.background.getHeight();
-        for (int x = 0; x < Commons.BOARD_WIDTH + backgroundWidth; x+=backgroundWidth) {
-            for (int y = 0; y < Commons.BOARD_HEIGHT + backgroundHeight; y+= backgroundHeight) {
-                g.drawImage(Assets.background, x, y, backgroundWidth, backgroundHeight, null);
-            }
-        }
-
-        g.setColor(Color.green);
-
         if (inGame) {
+
+            // draw tileable background
+            int backgroundWidth = Assets.background.getWidth();
+            int backgroundHeight = Assets.background.getHeight();
+            for (int x = 0; x < Commons.BOARD_WIDTH + backgroundWidth; x+=backgroundWidth) {
+                for (int y = 0; y < Commons.BOARD_HEIGHT + backgroundHeight; y+= backgroundHeight) {
+                    //g.drawImage(Assets.background, x, y, backgroundWidth, backgroundHeight, null);
+                }
+            }
+
+            drawLivesAndAlive(g2d);
+
+            g.setColor(Color.green);
             g.drawLine(0, Commons.GROUND,
                     Commons.BOARD_WIDTH, Commons.GROUND);
 
@@ -165,6 +168,24 @@ public class Board extends JComponent {
         }
 
         Toolkit.getDefaultToolkit().sync();
+    }
+
+    private void drawLivesAndAlive(Graphics2D g) {
+        String text = "Aliens Alive: " + getAliveCount();
+        Font font = new Font("Helvetica", Font.BOLD, 15);
+        // Get the FontMetrics
+        FontMetrics metrics = g.getFontMetrics(font);
+        // Determine the X coordinate for the text
+        int x = (Commons.BOARD_WIDTH/2 - metrics.stringWidth(text)) - 20;
+        // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
+        int y = 20;
+        g.setFont(font);
+        g.setColor(Color.WHITE);
+        g.drawString(text, x, y);
+
+        g.setColor(Color.WHITE);
+        // draw the lives and score on the top right of the screen
+        g.drawString("Lives: " + player.getLives() + "❤", Commons.BOARD_WIDTH/2 + 20, 20);
     }
 
     private void gameOver(Graphics g) {
