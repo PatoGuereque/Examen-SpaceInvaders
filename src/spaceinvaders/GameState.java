@@ -28,8 +28,6 @@ import java.io.IOException;
  *     alienX:alienY:alive
  *     bombX:bombY:alive
  *
- *
- * 
  * @author Pato
  */
 public class GameState {
@@ -52,7 +50,8 @@ public class GameState {
         
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(saveFile))) {           
             String line = bufferedReader.readLine();
-            
+
+            // read lives, score, and time
             if (line != null) {
                 int lives = Integer.parseInt(line);
                 int score = Integer.parseInt(bufferedReader.readLine());
@@ -64,6 +63,7 @@ public class GameState {
                 return;
             }
 
+            // read the player position
             line = bufferedReader.readLine();
             double playerX, playerY;
             String[] split = line.split(":");
@@ -72,6 +72,7 @@ public class GameState {
             game.getPlayer().setX(playerX);
             game.getPlayer().setY(playerY);
 
+            // read the player bullet position
             line = bufferedReader.readLine();
             double shotX, shotY;
             String[] shotSplit = line.split(":");
@@ -84,11 +85,12 @@ public class GameState {
             }
 
             
-            // we read line by line
+            // we read all the aliens and bombs
             for (int i = 0; i < 4; i++) {
                 for (int j = 0; j < 6; j++) {
                     line = bufferedReader.readLine();
 
+                    // read alien position and state
                     String[] alienSplit = line.split(":");
                     double alienX = Double.parseDouble(alienSplit[0]);
                     double alienY = Double.parseDouble(alienSplit[1]);
@@ -100,11 +102,13 @@ public class GameState {
                     alien.setVisible(alive);
                     alien.setDying(!alive);
 
+                    // read bomb position adn state
                     line = bufferedReader.readLine();
                     String[] bombSplit = line.split(":");
                     double bombX = Double.parseDouble(bombSplit[0]);
                     double bombY = Double.parseDouble(bombSplit[1]);
                     alive = Boolean.parseBoolean(bombSplit[2]);
+
                     alien.getBomb().setX(bombX);
                     alien.getBomb().setY(bombY);
                     alien.getBomb().setVisible(alive);
@@ -122,7 +126,7 @@ public class GameState {
     public void save() {
         StringBuilder saveString = new StringBuilder();
         
-        // save lives, Score and time
+        // save lives, score and time
         saveString.append(game.getPlayer().getLives()).append('\n');
         saveString.append(game.getPlayer().getScore()).append('\n');
         saveString.append(System.currentTimeMillis() - game.getStartTime()).append('\n');
