@@ -9,9 +9,6 @@ package spaceinvaders.sprites;
 import java.awt.*;
 
 import spaceinvaders.sound.Sound;
-import spaceinvaders.util.ImageLoader;
-
-import java.awt.image.BufferedImage;
 import spaceinvaders.util.Animation;
 import spaceinvaders.util.Assets;
 
@@ -19,23 +16,38 @@ import spaceinvaders.util.Assets;
  * @author antoniomejorado
  */
 public class Shot extends Sprite {
-
-    private final Animation animation;
-
+    private final Animation animation;      //hold shot animation
+    
+    /**
+     * shot constructor
+     */
     public Shot() {
         this.animation = new Animation(Assets.shot, 200);
     }
 
+    /**
+     * shot constructor
+     * @param x double
+     * @param y double
+     */
     public Shot(double x, double y) {
         this.animation = new Animation(Assets.shot, 200);
         initShot(x, y);
     }
 
+    /**
+     * kills shot
+     */
     @Override
     public void die() {
         super.die();
     }
 
+    /**
+     * initialize shot
+     * @param x double
+     * @param y double
+     */
     private void initShot(double x, double y) {
         width = 30;
         height = 20;
@@ -47,7 +59,11 @@ public class Shot extends Sprite {
         setY(y - V_SPACE);
         Sound.SHOOT.play();
     }
-
+    
+    /**
+     * draw shot
+     * @param g graphics
+     */
     @Override
     public void render(Graphics2D g) {
         animation.tick();

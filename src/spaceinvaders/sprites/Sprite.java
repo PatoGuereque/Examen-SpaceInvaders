@@ -12,9 +12,6 @@ package spaceinvaders.sprites;
  */
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import spaceinvaders.util.Animation;
 import spaceinvaders.util.Assets;
 
@@ -30,64 +27,123 @@ public abstract class Sprite {
     protected double height;
     protected double width;
 
+    /**
+     * sprite constructor
+     */
     public Sprite() {
         visible = true;
         this.explosion = new Animation(Assets.explosion, 100);
     }
 
+    /**
+     * kills sprite
+     */
     public void die() {
         visible = false;
     }
-
+    
+    /**
+     * evaluate visibility
+     * @return visible
+     */
     public boolean isVisible() {
         return visible;
     }
-
+    
+    /**
+     * set visibility
+     * @param visible 
+     */
     public void setVisible(boolean visible) {
         this.visible = visible;
     }
-
+    
+    /**
+     * set x position
+     * @param x 
+     */
     public void setX(double x) {
         this.x = x;
     }
-
+    
+    /**
+     * set y position
+     * @param y 
+     */
     public void setY(double y) {
         this.y = y;
     }
 
+    /**
+     * get y position
+     * @return y
+     */
     public double getY() {
         return y;
     }
-
+    
+    /**
+     * get x position
+     * @return x
+     */
     public double getX() {
         return x;
     }
-
+    
+    /**
+     * set dying state
+     * @param dying 
+     */
     public void setDying(boolean dying) {
         this.dying = dying;
     }
-
+    
+    /**
+     * evaluate dying state
+     * @return dying
+     */
     public boolean isDying() {
         return this.dying;
     }
-
+    
+    /**
+     * gets sprite height
+     * @return height
+     */
     public double getHeight() {
         return height;
     }
-
+    
+    /**
+     * gets sprite width
+     * @return width
+     */
     public double getWidth() {
         return width;
     }
     
+    /**
+     * render method
+     * @param g graphics
+     */
     abstract public void render(Graphics2D g);
 
+    /**
+     * render explosion
+     * @param g graphics
+     */
     public void renderExplosion(Graphics2D g) {
         if(explosion.getIndex()!=4){
             this.explosion.tick();
             render(g, explosion);
         }
     }
-
+    
+    /**
+     * render sprite
+     * @param g graphics
+     * @param animation sprite animation
+     */
     protected void render(Graphics2D g, Animation animation) {
         AffineTransform t = new AffineTransform();
         t.translate(x, y);
