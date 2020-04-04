@@ -32,6 +32,7 @@ public class Board extends JComponent {
     private BufferedImage scene;
     private Graphics2D g2d;
     private Dimension d;
+    private GameState gameState;
     private List<Alien> aliens;
     private Player player;
     private Shot shot;
@@ -58,6 +59,7 @@ public class Board extends JComponent {
         scene = new BufferedImage(Commons.BOARD_WIDTH, Commons.BOARD_HEIGHT, 1);
         g2d = scene.createGraphics();
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        gameState = new GameState(this);
 
         addKeyListener(new TAdapter());
         setFocusable(true);
@@ -340,6 +342,14 @@ public class Board extends JComponent {
         return shot;
     }
 
+    public void setShot(Shot shot) {
+        this.shot = shot;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
     private class GameCycle implements ActionListener {
 
         @Override
@@ -369,6 +379,12 @@ public class Board extends JComponent {
                         shot = new Shot(x, y);
                     }
                 }
+            }
+
+            if (key == KeyEvent.VK_G) {
+                gameState.save();
+            } else if (key == KeyEvent.VK_C) {
+                gameState.load();
             }
         }
     }
