@@ -470,17 +470,17 @@ public class Board extends JComponent {
     /**
      * @return the starting game time
      */
-    public int getTime() {
-        return time;
+    public long getStartTime() {
+        return startTime;
     }
 
     /**
      * Sets the starting game time
      *
-     * @param time the game time
+     * @param startTime the game start time
      */
-    public void setTime(int time) {
-        this.time = time;
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
     }
 
     /**

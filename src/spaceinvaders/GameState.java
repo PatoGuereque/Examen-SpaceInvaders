@@ -56,10 +56,10 @@ public class GameState {
             if (line != null) {
                 int lives = Integer.parseInt(line);
                 int score = Integer.parseInt(bufferedReader.readLine());
-                int time = Integer.parseInt(bufferedReader.readLine());
+                long time = Long.parseLong(bufferedReader.readLine());
                 game.getPlayer().setLives(lives);
                 game.getPlayer().setScore(score);
-                game.setTime((int) (System.currentTimeMillis()/1000) - time);
+                game.setStartTime(System.currentTimeMillis() - time);
             } else {
                 return;
             }
@@ -125,7 +125,7 @@ public class GameState {
         // save lives, Score and time
         saveString.append(game.getPlayer().getLives()).append('\n');
         saveString.append(game.getPlayer().getScore()).append('\n');
-        saveString.append(game.getTime()).append('\n');
+        saveString.append(System.currentTimeMillis() - game.getStartTime()).append('\n');
 
         // save player and shot
         saveString.append(serializeObject(game.getPlayer()));
