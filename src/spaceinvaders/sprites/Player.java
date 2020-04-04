@@ -39,7 +39,7 @@ public class Player extends Sprite {
     public Player(Board game) {
         this.game = game;
         initPlayer();
-        lives = 3;
+        lives = 2;
         score = 0;
     }
 
