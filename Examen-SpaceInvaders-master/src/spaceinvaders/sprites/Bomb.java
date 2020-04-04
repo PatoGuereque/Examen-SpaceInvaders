@@ -4,16 +4,19 @@ import java.awt.Graphics;
 import spaceinvaders.util.ImageLoader;
 
 import java.awt.image.BufferedImage;
+import spaceinvaders.util.Animation;
+import spaceinvaders.util.Assets;
 
 public class Bomb extends Sprite {
-
+    public Animation animation;
     private final static BufferedImage BOMB_IMAGE = ImageLoader.loadImage("/images/bomb.png");
     private boolean destroyed;
 
     public Bomb(int x, int y) {
+        this.animation = new Animation(Assets.bomb, 200);
         initBomb(x, y);
-        width *= 2;
-        height *= 2;
+        width = 30;
+        height = 20;
     }
 
     private void initBomb(int x, int y) {
@@ -34,6 +37,7 @@ public class Bomb extends Sprite {
 
     @Override
     public void render(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        animation.tick();
+        g.drawImage(animation.getCurrentFrame() ,x, y, width, height, null);
     }
 }

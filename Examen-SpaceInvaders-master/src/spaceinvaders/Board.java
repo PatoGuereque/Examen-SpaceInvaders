@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import spaceinvaders.util.Assets;
+import static spaceinvaders.util.Assets.bomb;
 
 /**
  * @author antoniomejorado
@@ -124,7 +125,8 @@ public class Board extends JPanel {
 
     private void drawShot(Graphics g) {
         if (shot.isVisible()) {
-            g.drawImage(shot.getImage(), shot.getX(), shot.getY(), shot.getWidth(), shot.getHeight(), this);
+            //g.drawImage(shot.getImage(), shot.getX(), shot.getY(), shot.getWidth(), shot.getHeight(), this);
+            shot.render(g);
         }
     }
 
@@ -133,7 +135,7 @@ public class Board extends JPanel {
             Bomb b = a.getBomb();
 
             if (!b.isDestroyed()) {
-                g.drawImage(b.getImage(), b.getX(), b.getY(), b.getWidth(), b.getHeight(), this);
+                b.render(g);
             }
         }
     }
