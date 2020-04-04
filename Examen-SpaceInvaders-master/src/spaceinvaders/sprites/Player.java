@@ -11,6 +11,8 @@ import spaceinvaders.Commons;
 import spaceinvaders.util.ImageLoader;
 
 import java.awt.event.KeyEvent;
+import spaceinvaders.util.Animation;
+import spaceinvaders.util.Assets;
 
 /**
  * @author antoniomejorado
@@ -19,6 +21,9 @@ public class Player extends Sprite {
     private int lives;
     private int START_X = 270;
     private int START_Y = 560;
+    public Animation idle;
+    public Animation left;
+    public Animation right;
 
     public Player() {
         initPlayer();
@@ -28,9 +33,13 @@ public class Player extends Sprite {
     private void initPlayer() {
         setImage(ImageLoader.loadImage("/images/player.png"));
         width = Commons.PLAYER_WIDTH;
-        height *= 2;
+        height = Commons.PLAYER_HEIGHT;
         setX(START_X);
         setY(START_Y);
+        
+        idle = new Animation(Assets.playerIdle, 200);
+        left = new Animation(Assets.playerLeft, 200);
+        right = new Animation(Assets.playerRight,200);
     }
 
     public void tick() {
@@ -84,6 +93,21 @@ public class Player extends Sprite {
 
     @Override
     public void render(Graphics g) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        //idle
+        if(dx == 0){
+            idle.tick();
+            g.drawImage(idle.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+        }
+        //left
+        if(dx == -2){
+            left.tick();
+            g.drawImage(left.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+        }
+        //right
+        if(dx == 2){
+            right.tick();
+            g.drawImage(right.getCurrentFrame(), getX(), getY(), getWidth(), getHeight(), null);
+        }
     }
 }

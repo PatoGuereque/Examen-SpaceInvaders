@@ -104,7 +104,8 @@ public class Board extends JPanel {
 
     private void drawPlayer(Graphics g) {
         if (player.isVisible()) {
-            g.drawImage(player.getImage(), player.getX(), player.getY(), player.getWidth(), player.getHeight(), this);
+            //g.drawImage(player.getImage(), player.getX(), player.getY(), player.getWidth(), player.getHeight(), this);
+            player.render(g);
         }
 
         if (player.isDying()) {
