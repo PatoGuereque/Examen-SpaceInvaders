@@ -11,7 +11,6 @@ import java.awt.*;
 import spaceinvaders.Board;
 import spaceinvaders.Commons;
 import spaceinvaders.sound.Sound;
-
 import java.awt.event.KeyEvent;
 import spaceinvaders.util.Animation;
 import spaceinvaders.util.Assets;
@@ -22,17 +21,21 @@ import spaceinvaders.util.Assets;
 public class Player extends Sprite {
 
     private final Board game;
-    private int lives;
-    private int score;
-    private final int START_X = 270;
-    private final int START_Y = 560;
-    private Animation idle;
-    private Animation left;
-    private Animation right;
+    private int lives;                          //player lives left
+    private int score;                          //player score
+    private final int START_X = 270;            //player starting x position
+    private final int START_Y = 560;            //player starting y position
+    private Animation idle;                     //player idle animation
+    private Animation left;                     //player left animation
+    private Animation right;                    //player right animation
     private boolean leftPress = false;
     private boolean rightPress = false;
     private Runnable nextTickRun;
 
+    /**
+     * Player constructor
+     * @param game Board
+     */
     public Player(Board game) {
         this.game = game;
         initPlayer();
@@ -40,6 +43,9 @@ public class Player extends Sprite {
         score = 0;
     }
 
+    /**
+     * initialize player
+     */
     private void initPlayer() {
         width = Commons.PLAYER_WIDTH;
         height = Commons.PLAYER_HEIGHT;
@@ -50,7 +56,10 @@ public class Player extends Sprite {
         left = new Animation(Assets.playerLeft, 200);
         right = new Animation(Assets.playerRight,200);
     }
-
+    
+    /**
+     * update player
+     */
     public void tick() {
         if (isDying()) {
             return;
@@ -66,7 +75,10 @@ public class Player extends Sprite {
             x = Commons.BOARD_WIDTH - 2 * width;
         }
     }
-
+    
+    /**
+     * reduce player lives and destroy all shots on the board
+     */
     public void damage() {
         for(Alien alien : game.getAliens()){
             alien.getBomb().setDestroyed(true);
@@ -77,6 +89,10 @@ public class Player extends Sprite {
         setLives(getLives() - 1);
     }
 
+    /**
+     * get key presses
+     * @param e KeyEvent
+     */
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
@@ -91,6 +107,10 @@ public class Player extends Sprite {
         }
     }
 
+    /**
+     * detect key releases
+     * @param e KeyEvent
+     */
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
 
@@ -113,27 +133,50 @@ public class Player extends Sprite {
         }
     }
     
+    /**
+     * get lives remaining
+     * @return lives
+     */
     public int getLives(){
         return this.lives;
     }
     
+    /**
+     * set lives left
+     * @param lives
+     */
     public void setLives(int lives){
         this.lives = lives;
     }
     
+    /**
+     * get player score
+     * @return 
+     */
     public int getScore(){
         return this.score;
     }
     
+    /**
+     * get player score
+     * @param score 
+     */
     public void setScore(int score){
         this.score = score;
     }
     
+    /**
+     * reset player to starting position and visibility
+     */
     public void reset() {
         setVisible(true);
         initPlayer();
     }
 
+    /**
+     * draw player on game board
+     * @param g graphics
+     */
     @Override
     public void render(Graphics2D g) {
         if (nextTickRun != null) {
