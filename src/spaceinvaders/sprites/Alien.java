@@ -8,9 +8,6 @@ package spaceinvaders.sprites;
 
 import java.awt.*;
 
-import spaceinvaders.util.ImageLoader;
-
-import java.awt.image.BufferedImage;
 import spaceinvaders.Commons;
 import spaceinvaders.util.Animation;
 import spaceinvaders.util.Assets;
@@ -21,13 +18,23 @@ import spaceinvaders.util.Assets;
 public class Alien extends Sprite {
 
     private Bomb bomb;
-    private Animation animation;
-
+    private final Animation animation;
+    
+    /**
+     * alien constructor
+     * @param x coordinate
+     * @param y coordinate
+     */
     public Alien(int x, int y) {
         this.animation = new Animation(Assets.alien, 200);
         initAlien(x, y);
     }
-
+    
+    /**
+     * initialize alien
+     * @param x coordinate
+     * @param y coordinate
+     */
     private void initAlien(int x, int y) {
         this.x = x;
         this.y = y;
@@ -36,15 +43,27 @@ public class Alien extends Sprite {
         width = Commons.ALIEN_WIDTH;
         height = Commons.ALIEN_HEIGHT;
     }
-
+    
+    /**
+     * move alien according to direction
+     * @param direction double
+     */
     public void move(double direction) {
         this.x += direction;
     }
 
+    /**
+     * get bomb for alien
+     * @return bomb
+     */
     public Bomb getBomb() {
         return bomb;
     }
 
+    /**
+     * draw alien in game board
+     * @param g graphics
+     */
     @Override
     public void render(Graphics2D g) {
         animation.tick();
