@@ -48,7 +48,7 @@ public class Board extends JComponent {
     private final long alienSpeed = 5;
     // the direction in which the alien is moving
     private int alienDirection = -1;
-    private int deaths = 0;
+    private int alienKillCounter = 0;
 
     // To know when the game is over
     private boolean inGame = true;
@@ -117,6 +117,9 @@ public class Board extends JComponent {
         // Initialize our player objects
         player = new Player(this);
         shot = new Shot();
+
+        // reset alien kill counter
+        alienKillCounter = 0;
     }
 
     /**
@@ -326,7 +329,11 @@ public class Board extends JComponent {
 
                         alien.setDying(true);
                         Sound.DEATH.play();
-                        deaths++;
+                        alienKillCounter++;
+                        // increment a life every 10 kills
+                        if (alienKillCounter % 10 == 0) {
+                            player.setLives(player.getLives() + 1);
+                        }
                         player.setScore(player.getScore() + 50);
                         shot.die();
                     }
