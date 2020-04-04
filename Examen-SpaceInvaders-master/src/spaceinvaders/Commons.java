@@ -20,8 +20,8 @@ public interface Commons {
     int GROUND = 580;
     int BOMB_HEIGHT = 5;
 
-    int ALIEN_HEIGHT = 24;
-    int ALIEN_WIDTH = 24;
+    int ALIEN_HEIGHT = 32;
+    int ALIEN_WIDTH = 32;
     int ALIEN_INIT_X = 300;
     int ALIEN_INIT_Y = 10;
 

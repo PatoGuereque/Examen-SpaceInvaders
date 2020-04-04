@@ -94,7 +94,7 @@ public abstract class Sprite {
     public void renderExplosion(Graphics g) {
         if(explosion.getIndex()!=4){
             this.explosion.tick();
-            g.drawImage(explosion.getCurrentFrame(), x, y, getWidth()*2, getHeight()*2, null);
+            g.drawImage(explosion.getCurrentFrame(), x, y, 32, 32, null);
         }
     }
 }

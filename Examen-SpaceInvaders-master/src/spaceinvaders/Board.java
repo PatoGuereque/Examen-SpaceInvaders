@@ -91,7 +91,7 @@ public class Board extends JPanel {
         for (Alien alien : aliens) {
             //alien.animation.tick();
             if (alien.isVisible()) {
-                g.drawImage(alien.getImage(), alien.getX(), alien.getY(), alien.getWidth(), alien.getHeight(), this);
+                alien.render(g);
             }
 
             if (alien.isDying()) {
