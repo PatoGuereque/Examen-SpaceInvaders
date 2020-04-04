@@ -208,16 +208,9 @@ public class Board extends JComponent {
     private void doDrawing(Graphics2D g) {
         g.drawImage(Assets.background, 0, 0, Commons.BOARD_HEIGHT * Assets.background.getWidth() / Assets.background.getHeight(),
                 Commons.BOARD_HEIGHT, null);
-        g.setColor(Color.black);
-        g.fillRect(0, 0, dimension.width, dimension.height);
 
         if (inGame) {
             drawLivesAndAlive(g2d);
-
-            // draw the ground
-            g.setColor(Color.green);
-            g.drawLine(0, Commons.GROUND,
-                    Commons.BOARD_WIDTH, Commons.GROUND);
 
             // draw all our sprites
             drawAliens(g);
