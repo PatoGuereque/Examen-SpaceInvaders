@@ -18,12 +18,15 @@ import spaceinvaders.util.Assets;
  * @author antoniomejorado
  */
 public class Player extends Sprite {
+
     private int lives;
-    private int START_X = 270;
-    private int START_Y = 560;
-    public Animation idle;
-    public Animation left;
-    public Animation right;
+    private final int START_X = 270;
+    private final int START_Y = 560;
+    private Animation idle;
+    private Animation left;
+    private Animation right;
+    private boolean leftPress = false;
+    private boolean rightPress = false;
 
     public Player() {
         initPlayer();
@@ -31,7 +34,6 @@ public class Player extends Sprite {
     }
 
     private void initPlayer() {
-        setImage(ImageLoader.loadImage("/images/player.png"));
         width = Commons.PLAYER_WIDTH;
         height = Commons.PLAYER_HEIGHT;
         setX(START_X);
@@ -58,10 +60,12 @@ public class Player extends Sprite {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
+            leftPress = true;
             dx = -2;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
+            rightPress = true;
             dx = 2;
         }
     }
@@ -70,11 +74,21 @@ public class Player extends Sprite {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
-            dx = 0;
+            if (rightPress) {
+                dx = 2;
+            } else {
+                dx = 0;
+            }
+            leftPress = false;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            dx = 0;
+            if (leftPress) {
+                dx = -2;
+            } else {
+                dx = 0;
+            }
+            rightPress = false;
         }
     }
     
@@ -93,7 +107,6 @@ public class Player extends Sprite {
 
     @Override
     public void render(Graphics g) {
-
         //idle
         if(dx == 0){
             idle.tick();
