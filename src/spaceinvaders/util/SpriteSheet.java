@@ -12,10 +12,13 @@ import java.awt.image.BufferedImage;
  * @author insan
  */
 public class SpriteSheet {
+
     private BufferedImage sheet;            //hold spritesheet
     
     /**
-     * load spritesheet
+     * Creates a SpriteSheet from the image to be able to get the
+     * individual frames easier.
+     *
      * @param sheet image with spritesheet
      */
     public SpriteSheet(BufferedImage sheet){
@@ -23,7 +26,7 @@ public class SpriteSheet {
     }
     
     /**
-     * cut spritesheet into individual frames
+     * Cut spritesheet into individual frames
      * @param x x position
      * @param y y position
      * @param width width value

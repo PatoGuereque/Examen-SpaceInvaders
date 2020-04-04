@@ -12,13 +12,16 @@ import java.awt.image.BufferedImage;
  * @author insan
  */
 public class Animation {
+
     private int speed;
     private int index;
     private long timer;
     private long lastTime;
     private BufferedImage[] frames;
+
     /**
-     * 
+     * Creates a new Animation with the array of images
+     *
      * @param frames animation frames
      * @param speed animation play speed
      */
@@ -31,7 +34,6 @@ public class Animation {
     }
     
     /**
-     * 
      * @return current animation frame
      */
     public BufferedImage getCurrentFrame(){
@@ -39,14 +41,16 @@ public class Animation {
     }
     
     /**
-     * reset index
+     * Reset the animation frame
      */
     public void reset() {
         this.index = 0;
     }
     
     /**
-     * update animation
+     * Update animation frame, if the current time is greater
+     * than the last time plus the speed. This will also loop
+     * the animation if it reached the end.
      */
     public void tick(){
         timer += System.currentTimeMillis() - lastTime;
@@ -62,7 +66,6 @@ public class Animation {
     }
     
     /**
-     * 
      * @return frame array index
      */
     public int getIndex() {

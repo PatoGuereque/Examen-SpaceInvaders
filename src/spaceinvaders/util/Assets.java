@@ -12,6 +12,7 @@ import java.awt.image.BufferedImage;
  * @author insan
  */
 public class Assets {
+
     public static BufferedImage background;
     public static BufferedImage explosion[];
     public static BufferedImage alien[];
@@ -22,7 +23,7 @@ public class Assets {
     public static BufferedImage playerRight[];
 
     /**
-     * initialize all assets
+     * Initialize all assets
      */
     public static void init(){
         //explosion

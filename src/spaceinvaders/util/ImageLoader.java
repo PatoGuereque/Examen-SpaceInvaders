@@ -13,8 +13,9 @@ import java.util.logging.Logger;
 public class ImageLoader {
     
     private ImageLoader() { }
+
     /**
-     * load image
+     * Load an image from the classloader
      * @param path to image to load
      * @return buffered image
      */
