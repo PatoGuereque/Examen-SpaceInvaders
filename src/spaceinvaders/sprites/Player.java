@@ -50,6 +50,10 @@ public class Player extends Sprite {
     }
 
     public void tick() {
+        if (isDying()) {
+            return;
+        }
+
         x += dx;
 
         if (x <= 2) {
