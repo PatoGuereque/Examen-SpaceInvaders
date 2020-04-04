@@ -18,9 +18,12 @@ public class SoundClip {
     private AudioInputStream sample;
     private Clip clip;
     private boolean looping = false;
-    private int repeat = 0;
-    private String filename = "";
 
+    /**
+     * Creates a SoundClip without loading anything.
+     * After creating the object using this constructor, one
+     * must call {@link SoundClip#load(String)} to load a sound
+     */
     public SoundClip() {
         try {
             clip = AudioSystem.getClip();
@@ -29,41 +32,33 @@ public class SoundClip {
         }
     }
 
-
-    public SoundClip(String filename) {
+    /**
+     * Creates a SoundClip and loads the
+     * sound from the provided path
+     *
+     * @param filePath the sound file path
+     */
+    public SoundClip(String filePath) {
         this();
-        load(filename);
+        load(filePath);
     }
 
+    /**
+     * Sets wether or not the clip will be
+     * played continiously or just once
+     *
+     * @param looping if the clip should loop
+     */
     public void setLooping(boolean looping) {
         this.looping = looping;
     }
 
-    public void setRepeat(int repeat) {
-        this.repeat = repeat;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-//Los métodos de acceso son usados para obtener los valores del objeto SoundClip.
-
-    public Clip getClip() {
-        return clip;
-    }
-
-    public boolean getLooping() {
-        return looping;
-    }
-
-    public int getRepeat() {
-        return repeat;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
+    /**
+     * Gets the resource url from our classloader
+     *
+     * @param filename the sound file name
+     * @return the file url
+     */
     private URL getURL(String filename) {
         URL url = null;
         try {
@@ -75,15 +70,22 @@ public class SoundClip {
         return url;
     }
 
+    /**
+     * Gets if the clip is loaded
+     * @return true if the clip is loaded
+     */
     public boolean isLoaded() {
         return sample != null;
     }
 
+    /**
+     * Loads the audio clip from the specified file
+     * @param audiofile the audio file path
+     * @return true if it successfully loaded the sound
+     */
     public boolean load(String audiofile) {
         try {
-
-            setFilename(audiofile);
-            sample = AudioSystem.getAudioInputStream(getURL(filename));
+            sample = AudioSystem.getAudioInputStream(getURL(audiofile));
             clip.open(sample);
             return true;
         } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
@@ -92,6 +94,12 @@ public class SoundClip {
         }
     }
 
+    /**
+     * Plays the sound.
+     * <p />
+     * If {@link SoundClip#setLooping(boolean)} was set to true, it will
+     * play it continuously.
+     */
     public void play() {
         if (!isLoaded())
             return;
@@ -103,9 +111,12 @@ public class SoundClip {
         if (looping)
             clip.loop(Clip.LOOP_CONTINUOUSLY);
         else
-            clip.loop(repeat);
+            clip.loop(0);
     }
 
+    /**
+     * Stops the loop if there is any
+     */
     public void stop() {
         clip.loop(0);
     }
