@@ -21,7 +21,7 @@ public class Alien extends Sprite {
     private final Animation animation;
     
     /**
-     * alien constructor
+     * Alien constructor
      * @param x coordinate
      * @param y coordinate
      */
@@ -31,7 +31,7 @@ public class Alien extends Sprite {
     }
     
     /**
-     * initialize alien
+     * Initialize alien
      * @param x coordinate
      * @param y coordinate
      */
@@ -45,7 +45,7 @@ public class Alien extends Sprite {
     }
     
     /**
-     * move alien according to direction
+     * Move alien according to direction
      * @param direction double
      */
     public void move(double direction) {
@@ -53,7 +53,7 @@ public class Alien extends Sprite {
     }
 
     /**
-     * get bomb for alien
+     * Get bomb for this alien
      * @return bomb
      */
     public Bomb getBomb() {
@@ -61,7 +61,7 @@ public class Alien extends Sprite {
     }
 
     /**
-     * draw alien in game board
+     * Draw alien in game board
      * @param g graphics
      */
     @Override

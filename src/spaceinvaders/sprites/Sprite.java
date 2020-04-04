@@ -52,7 +52,7 @@ public abstract class Sprite {
     
     /**
      * set visibility
-     * @param visible 
+     * @param visible if the sprite is visible
      */
     public void setVisible(boolean visible) {
         this.visible = visible;
@@ -60,7 +60,7 @@ public abstract class Sprite {
     
     /**
      * set x position
-     * @param x 
+     * @param x the x coordinate
      */
     public void setX(double x) {
         this.x = x;
@@ -68,7 +68,7 @@ public abstract class Sprite {
     
     /**
      * set y position
-     * @param y 
+     * @param y the y coordinate
      */
     public void setY(double y) {
         this.y = y;
@@ -76,7 +76,7 @@ public abstract class Sprite {
 
     /**
      * get y position
-     * @return y
+     * @return the y position
      */
     public double getY() {
         return y;
@@ -84,7 +84,7 @@ public abstract class Sprite {
     
     /**
      * get x position
-     * @return x
+     * @return the x position
      */
     public double getX() {
         return x;
@@ -92,7 +92,7 @@ public abstract class Sprite {
     
     /**
      * set dying state
-     * @param dying 
+     * @param dying if the sprite is dying
      */
     public void setDying(boolean dying) {
         this.dying = dying;

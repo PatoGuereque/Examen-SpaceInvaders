@@ -5,13 +5,14 @@ import spaceinvaders.util.Animation;
 import spaceinvaders.util.Assets;
 
 public class Bomb extends Sprite {
+
     private Animation animation;
     private boolean destroyed;
 
     /**
-     * bomb constructor
-     * @param x 
-     * @param y 
+     * Creates a new bomb on the coordinates
+     * @param x the x coordinate
+     * @param y the y coordinate
      */
     public Bomb(int x, int y) {
         this.animation = new Animation(Assets.bomb, 200);
@@ -21,9 +22,9 @@ public class Bomb extends Sprite {
     }
 
     /**
-     * initialize bomb
-     * @param x
-     * @param y 
+     * initialize bomb on the specified coordinates
+     * @param x the x coordinate
+     * @param y the y coordinate
      */
     private void initBomb(int x, int y) {
         setDestroyed(true);
@@ -32,23 +33,22 @@ public class Bomb extends Sprite {
     }
 
     /**
-     * set destroyed state
-     * @param destroyed 
+     * Set destroyed state
+     * @param destroyed whether it's destroyed or not
      */
     public void setDestroyed(boolean destroyed) {
         this.destroyed = destroyed;
     }
     
     /**
-     * evaluate destroyed state
-     * @return destroyed
+     * @return true if the bom is destroyed
      */
     public boolean isDestroyed() {
         return destroyed;
     }
     
     /**
-     * draw bomb in game board
+     * Draw bomb in game board
      * @param g graphics
      */
     @Override

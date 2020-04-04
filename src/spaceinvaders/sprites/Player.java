@@ -28,9 +28,9 @@ public class Player extends Sprite {
     private Animation idle;                     //player idle animation
     private Animation left;                     //player left animation
     private Animation right;                    //player right animation
-    private boolean leftPress = false;
-    private boolean rightPress = false;
-    private Runnable nextTickRun;
+    private boolean leftPress = false;          //if the left key is pressed
+    private boolean rightPress = false;         //if the right key is pressed
+    private Runnable nextTickRun;               //runnable to run next tick
 
     /**
      * Player constructor
@@ -44,7 +44,7 @@ public class Player extends Sprite {
     }
 
     /**
-     * initialize player
+     * Initialize player
      */
     private void initPlayer() {
         width = Commons.PLAYER_WIDTH;
@@ -58,7 +58,7 @@ public class Player extends Sprite {
     }
     
     /**
-     * update player
+     * Update player position
      */
     public void tick() {
         if (isDying()) {
@@ -143,7 +143,7 @@ public class Player extends Sprite {
     
     /**
      * set lives left
-     * @param lives
+     * @param lives the new lives
      */
     public void setLives(int lives){
         this.lives = lives;
@@ -151,7 +151,7 @@ public class Player extends Sprite {
     
     /**
      * get player score
-     * @return 
+     * @return the player's score
      */
     public int getScore(){
         return this.score;
@@ -159,7 +159,7 @@ public class Player extends Sprite {
     
     /**
      * get player score
-     * @param score 
+     * @param score the new score
      */
     public void setScore(int score){
         this.score = score;
@@ -185,7 +185,9 @@ public class Player extends Sprite {
         }
 
         if (isDying()) {
+            // renders explosion
             renderExplosion(g);
+
             if (explosion.getIndex() == 4) {
                 if (getLives() < 1){
                     die();

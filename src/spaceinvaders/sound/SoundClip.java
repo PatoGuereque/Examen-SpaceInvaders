@@ -44,8 +44,8 @@ public class SoundClip {
     }
 
     /**
-     * Sets wether or not the clip will be
-     * played continiously or just once
+     * Sets whether or not the clip will be
+     * played continuously or just once
      *
      * @param looping if the clip should loop
      */
@@ -96,7 +96,7 @@ public class SoundClip {
 
     /**
      * Plays the sound.
-     * <p />
+     * <p>
      * If {@link SoundClip#setLooping(boolean)} was set to true, it will
      * play it continuously.
      */
