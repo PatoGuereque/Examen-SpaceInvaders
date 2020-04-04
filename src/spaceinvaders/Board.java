@@ -137,26 +137,10 @@ public class Board extends JComponent {
     }
 
     private void doDrawing(Graphics2D g) {
-        g.setColor(Color.black);
-        g.fillRect(0, 0, d.width, d.height);
-
+        g.drawImage(Assets.background,0,0, Commons.BOARD_HEIGHT*Assets.background.getWidth()/Assets.background.getHeight(),
+                Commons.BOARD_HEIGHT,null);
         if (inGame) {
-
-            // draw tileable background
-            int backgroundWidth = Assets.background.getWidth();
-            int backgroundHeight = Assets.background.getHeight();
-            for (int x = 0; x < Commons.BOARD_WIDTH + backgroundWidth; x+=backgroundWidth) {
-                for (int y = 0; y < Commons.BOARD_HEIGHT + backgroundHeight; y+= backgroundHeight) {
-                    //g.drawImage(Assets.background, x, y, backgroundWidth, backgroundHeight, null);
-                }
-            }
-
             drawLivesAndAlive(g2d);
-
-            g.setColor(Color.green);
-            g.drawLine(0, Commons.GROUND,
-                    Commons.BOARD_WIDTH, Commons.GROUND);
-
             drawAliens(g);
             drawPlayer(g);
             drawShot(g);
@@ -187,7 +171,7 @@ public class Board extends JComponent {
 
         g.setColor(Color.WHITE);
         // draw the lives and score on the top right of the screen
-        g.drawString("Lives: " + player.getLives() + "❤", Commons.BOARD_WIDTH/2 + 20, 20);
+        g.drawString("Lives: " + player.getLives() + " ❤", Commons.BOARD_WIDTH/2 + 20, 20);
         g.drawString("Score " + player.getScore(), Commons.BOARD_WIDTH - 200, 20);
         g.drawString("Time: " + time, 20, 20);
     }

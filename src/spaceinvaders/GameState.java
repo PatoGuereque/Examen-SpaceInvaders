@@ -55,7 +55,11 @@ public class GameState {
             
             if (line != null) {
                 int lives = Integer.parseInt(line);
+                int score = Integer.parseInt(bufferedReader.readLine());
+                int time = Integer.parseInt(bufferedReader.readLine());
                 game.getPlayer().setLives(lives);
+                game.getPlayer().setScore(score);
+                game.setTime((int) (System.currentTimeMillis()/1000) - time);
             } else {
                 return;
             }

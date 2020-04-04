@@ -8,7 +8,7 @@ package spaceinvaders.util;
 import java.awt.image.BufferedImage;
 
 /**
- *
+ * 
  * @author insan
  */
 public class Animation {
@@ -17,7 +17,11 @@ public class Animation {
     private long timer;
     private long lastTime;
     private BufferedImage[] frames;
-    
+    /**
+     * 
+     * @param frames animation frames
+     * @param speed animation play speed
+     */
     public Animation(BufferedImage frames[], int speed){
         this.frames = frames;
         this.speed = speed;
@@ -26,14 +30,24 @@ public class Animation {
         lastTime = System.currentTimeMillis();
     }
     
+    /**
+     * 
+     * @return current animation frame
+     */
     public BufferedImage getCurrentFrame(){
         return frames[index];
     }
-
+    
+    /**
+     * reset index
+     */
     public void reset() {
         this.index = 0;
     }
-
+    
+    /**
+     * update animation
+     */
     public void tick(){
         timer += System.currentTimeMillis() - lastTime;
         lastTime = System.currentTimeMillis();
@@ -46,7 +60,11 @@ public class Animation {
             }
         }
     }
-
+    
+    /**
+     * 
+     * @return frame array index
+     */
     public int getIndex() {
         return index;
     }

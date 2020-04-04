@@ -6,10 +6,18 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * 
+ * @author insan
+ */
 public class ImageLoader {
-
+    
     private ImageLoader() { }
-
+    /**
+     * load image
+     * @param path to image to load
+     * @return buffered image
+     */
     public static BufferedImage loadImage(String path) {
         BufferedImage bufferedImage = null;
         try {
