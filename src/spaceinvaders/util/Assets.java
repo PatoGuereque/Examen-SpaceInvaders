@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
  */
 public class Assets {
     //public static BufferedImage explosionSheet;
+    public static BufferedImage background;
     public static BufferedImage explosion[];
     public static BufferedImage alien[];
     public static BufferedImage shot[];
@@ -58,5 +59,7 @@ public class Assets {
         for(int i=0; i<4; i++){
             bomb[i] = bombSheet.crop(i*32, 0, 32, 32);
         }
+
+        background = ImageLoader.loadImage("/images/spr.Background.png");
     }
 }

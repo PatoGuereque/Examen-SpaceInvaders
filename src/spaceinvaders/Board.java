@@ -135,6 +135,15 @@ public class Board extends JComponent {
     private void doDrawing(Graphics2D g) {
         g.setColor(Color.black);
         g.fillRect(0, 0, d.width, d.height);
+
+        int backgroundWidth = Assets.background.getWidth();
+        int backgroundHeight = Assets.background.getHeight();
+        for (int x = 0; x < Commons.BOARD_WIDTH + backgroundWidth; x+=backgroundWidth) {
+            for (int y = 0; y < Commons.BOARD_HEIGHT + backgroundHeight; y+= backgroundHeight) {
+                g.drawImage(Assets.background, x, y, backgroundWidth, backgroundHeight, null);
+            }
+        }
+
         g.setColor(Color.green);
 
         if (inGame) {
