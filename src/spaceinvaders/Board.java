@@ -214,7 +214,6 @@ public class Board extends JPanel {
                             && shotY >= (alienY)
                             && shotY <= (alienY + Commons.ALIEN_HEIGHT)) {
 
-                        alien.setImage(ImageLoader.loadImage("/images/explosion.png"));
                         alien.setDying(true);
                         Sound.DEATH.play();
                         deaths++;
@@ -260,7 +259,6 @@ public class Board extends JPanel {
                         && bombY >= (playerY)
                         && bombY <= (playerY + Commons.PLAYER_HEIGHT)) {
 
-                    player.setImage(ImageLoader.loadImage("/images/explosion.png"));
                     player.setDying(true);
                     bomb.setDestroyed(true);
                 }

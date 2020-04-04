@@ -8,8 +8,8 @@ import spaceinvaders.util.Animation;
 import spaceinvaders.util.Assets;
 
 public class Bomb extends Sprite {
-    public Animation animation;
-    private final static BufferedImage BOMB_IMAGE = ImageLoader.loadImage("/images/bomb.png");
+
+    private Animation animation;
     private boolean destroyed;
 
     public Bomb(int x, int y) {
@@ -24,7 +24,6 @@ public class Bomb extends Sprite {
 
         this.x = x;
         this.y = y;
-        setImage(BOMB_IMAGE);
     }
 
     public void setDestroyed(boolean destroyed) {

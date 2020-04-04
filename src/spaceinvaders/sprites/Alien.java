@@ -19,9 +19,8 @@ import spaceinvaders.util.Assets;
  */
 public class Alien extends Sprite {
 
-    private final static BufferedImage ALIEN_IMAGE = ImageLoader.loadImage("/images/alien.png");
     private Bomb bomb;
-    public Animation animation;
+    private Animation animation;
 
     public Alien(int x, int y) {
         this.animation = new Animation(Assets.alien, 200);
@@ -33,7 +32,6 @@ public class Alien extends Sprite {
         this.y = y;
 
         bomb = new Bomb(x, y);
-        setImage(ALIEN_IMAGE);
         width = Commons.ALIEN_WIDTH;
         height = Commons.ALIEN_HEIGHT;
     }

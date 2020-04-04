@@ -19,7 +19,6 @@ import spaceinvaders.util.Assets;
 
 public abstract class Sprite {
 
-    private BufferedImage image;
     private boolean visible;
     private boolean dying;
     private Animation explosion;
@@ -45,16 +44,6 @@ public abstract class Sprite {
 
     protected void setVisible(boolean visible) {
         this.visible = visible;
-    }
-
-    public void setImage(BufferedImage image) {
-        this.image = image;
-        this.width = image.getWidth();
-        this.height = image.getHeight();
-    }
-
-    public BufferedImage getImage() {
-        return image;
     }
 
     public void setX(int x) {

@@ -18,9 +18,12 @@ import spaceinvaders.util.Assets;
  * @author antoniomejorado
  */
 public class Shot extends Sprite {
-    public Animation animation;
-    private final static BufferedImage SHOT_IMAGE = ImageLoader.loadImage("/images/shot.png");
-    public Shot() { }
+
+    private final Animation animation;
+
+    public Shot() {
+        this.animation = new Animation(Assets.shot, 200);
+    }
 
     public Shot(int x, int y) {
         this.animation = new Animation(Assets.shot, 200);
@@ -33,7 +36,6 @@ public class Shot extends Sprite {
     }
 
     private void initShot(int x, int y) {
-        setImage(SHOT_IMAGE);
         width = 30;
         height = 20;
 
