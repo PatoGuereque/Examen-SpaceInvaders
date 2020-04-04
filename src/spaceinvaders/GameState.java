@@ -94,6 +94,7 @@ public class GameState {
                     alien.setX(alienX);
                     alien.setY(alienY);
                     alien.setVisible(alive);
+                    alien.setDying(!alive);
 
                     line = bufferedReader.readLine();
                     String[] bombSplit = line.split(":");
@@ -103,6 +104,7 @@ public class GameState {
                     alien.getBomb().setX(bombX);
                     alien.getBomb().setY(bombY);
                     alien.getBomb().setVisible(alive);
+                    alien.getBomb().setDying(!alive);
                 }
             }
         } catch(Exception e) {
