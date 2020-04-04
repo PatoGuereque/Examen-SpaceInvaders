@@ -39,7 +39,6 @@ public class Board extends JComponent {
 
     private final long speed = 5;
     private int direction = -1;
-    private int deaths = 0;
 
     private boolean inGame = true;
     private String message = "Game Over";
@@ -209,7 +208,7 @@ public class Board extends JComponent {
     }
 
     private void tick() {
-        if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
+        if (getAliveCount() == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
             inGame = false;
             timer.stop();
             message = "Game won!";
@@ -239,7 +238,6 @@ public class Board extends JComponent {
 
                         alien.setDying(true);
                         Sound.DEATH.play();
-                        deaths++;
                         shot.die();
                     }
                 }
