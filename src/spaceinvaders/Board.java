@@ -44,6 +44,8 @@ public class Board extends JComponent {
     private boolean inGame = true;
     private String message = "Game Over";
     private Timer timer;
+    private long startTime;
+    private int time;
 
     private final long nextMoveInterval = 50;
     private long lastMove = System.currentTimeMillis();
@@ -74,6 +76,7 @@ public class Board extends JComponent {
 
 
     private void gameInit() {
+        startTime = System.currentTimeMillis();
         aliens = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++) {
@@ -185,6 +188,8 @@ public class Board extends JComponent {
         g.setColor(Color.WHITE);
         // draw the lives and score on the top right of the screen
         g.drawString("Lives: " + player.getLives() + "❤", Commons.BOARD_WIDTH/2 + 20, 20);
+        g.drawString("Score " + player.getScore(), Commons.BOARD_WIDTH - 200, 20);
+        g.drawString("Time: " + time, 20, 20);
     }
 
     private void gameOver(Graphics g) {
@@ -209,7 +214,11 @@ public class Board extends JComponent {
     }
 
     private void tick() {
-        if (deaths == Commons.NUMBER_OF_ALIENS_TO_DESTROY) {
+        //update time
+        time =(int) (System.currentTimeMillis() - startTime)/1000;
+        
+        //check win state
+        if (getAliveCount() == 0) {
             inGame = false;
             timer.stop();
             message = "Game won!";
@@ -240,6 +249,7 @@ public class Board extends JComponent {
                         alien.setDying(true);
                         Sound.DEATH.play();
                         deaths++;
+                        player.setScore(player.getScore() + 50);
                         shot.die();
                     }
                 }
@@ -353,6 +363,14 @@ public class Board extends JComponent {
         repaint();
     }
 
+    public int getTime(){
+        return time;
+    }
+    
+    public void setTime(int time){
+        this.time = time;
+    }
+    
     public List<Alien> getAliens() {
         return aliens;
     }
