@@ -29,7 +29,11 @@ public class Animation {
     public BufferedImage getCurrentFrame(){
         return frames[index];
     }
-    
+
+    public void reset() {
+        this.index = 0;
+    }
+
     public void tick(){
         timer += System.currentTimeMillis() - lastTime;
         lastTime = System.currentTimeMillis();

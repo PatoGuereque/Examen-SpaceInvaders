@@ -8,8 +8,9 @@ package spaceinvaders.sprites;
 
 import java.awt.*;
 
+import spaceinvaders.Board;
 import spaceinvaders.Commons;
-import spaceinvaders.util.ImageLoader;
+import spaceinvaders.sound.Sound;
 
 import java.awt.event.KeyEvent;
 import spaceinvaders.util.Animation;
@@ -20,6 +21,7 @@ import spaceinvaders.util.Assets;
  */
 public class Player extends Sprite {
 
+    private final Board game;
     private int lives;
     private final int START_X = 270;
     private final int START_Y = 560;
@@ -28,8 +30,10 @@ public class Player extends Sprite {
     private Animation right;
     private boolean leftPress = false;
     private boolean rightPress = false;
+    private Runnable nextTickRun;
 
-    public Player() {
+    public Player(Board game) {
+        this.game = game;
         initPlayer();
         lives = 3;
     }
@@ -55,6 +59,16 @@ public class Player extends Sprite {
         if (x >= Commons.BOARD_WIDTH - 2 * width) {
             x = Commons.BOARD_WIDTH - 2 * width;
         }
+    }
+
+    public void damage() {
+        for(Alien alien : game.getAliens()){
+            alien.getBomb().setDestroyed(true);
+        }
+        game.getPlayerShot().die();
+        Sound.EXPLOSION.play();
+        setDying(true);
+        setLives(getLives() - 1);
     }
 
     public void keyPressed(KeyEvent e) {
@@ -108,6 +122,33 @@ public class Player extends Sprite {
 
     @Override
     public void render(Graphics2D g) {
+        if (nextTickRun != null) {
+            nextTickRun.run();
+            nextTickRun = null;
+        }
+
+        if (isDying()) {
+            renderExplosion(g);
+            if (explosion.getIndex() == 4) {
+                if (getLives() < 1){
+                    die();
+                    game.end();
+                } else {
+                    nextTickRun = () -> {
+                        setDying(false);
+                        reset();
+                        explosion.reset();
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    };
+                }
+            }
+            return;
+        }
+
         //idle
         if(dx == 0){
             idle.tick();

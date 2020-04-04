@@ -22,7 +22,7 @@ public abstract class Sprite {
 
     private boolean visible;
     private boolean dying;
-    private Animation explosion;
+    Animation explosion;
     
     protected double x;
     protected double y;

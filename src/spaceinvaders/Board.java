@@ -11,7 +11,6 @@ import spaceinvaders.sprites.Alien;
 import spaceinvaders.sprites.Bomb;
 import spaceinvaders.sprites.Player;
 import spaceinvaders.sprites.Shot;
-import spaceinvaders.util.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import spaceinvaders.util.Assets;
-import static spaceinvaders.util.Assets.bomb;
 
 /**
  * @author antoniomejorado
@@ -84,13 +82,12 @@ public class Board extends JComponent {
             }
         }
 
-        player = new Player();
+        player = new Player(this);
         shot = new Shot();
     }
 
     private void drawAliens(Graphics2D g) {
         for (Alien alien : aliens) {
-            //alien.animation.tick();
             if (alien.isVisible()) {
                 alien.render(g);
             }
@@ -104,29 +101,12 @@ public class Board extends JComponent {
 
     private void drawPlayer(Graphics2D g) {
         if (player.isVisible()) {
-            //g.drawImage(player.getImage(), player.getX(), player.getY(), player.getWidth(), player.getHeight(), this);
             player.render(g);
-        }
-
-        if (player.isDying()) {
-            Sound.EXPLOSION.play();
-            player.renderExplosion(g);
-            player.setLives(player.getLives() - 1);
-            if (player.getLives() < 1){
-                player.die();
-                inGame = false;
-            }
-            for(Alien alien : aliens){
-                alien.getBomb().setDestroyed(true);
-            }
-            player.setDying(false);
-            player.reset();
         }
     }
 
     private void drawShot(Graphics2D g) {
         if (shot.isVisible()) {
-            //g.drawImage(shot.getImage(), shot.getX(), shot.getY(), shot.getWidth(), shot.getHeight(), this);
             shot.render(g);
         }
     }
@@ -204,6 +184,10 @@ public class Board extends JComponent {
         // player
         player.tick();
 
+        if (player.isDying()) {
+            return;
+        }
+
         // shot
         if (shot.isVisible()) {
             double shotX = shot.getX();
@@ -264,7 +248,7 @@ public class Board extends JComponent {
                         && bombY >= (playerY)
                         && bombY <= (playerY + Commons.PLAYER_HEIGHT)) {
 
-                    player.setDying(true);
+                    player.damage();
                     bomb.setDestroyed(true);
                 }
             }
@@ -333,6 +317,18 @@ public class Board extends JComponent {
     private void doGameCycle() {
         tick();
         repaint();
+    }
+
+    public List<Alien> getAliens() {
+        return aliens;
+    }
+
+    public void end() {
+        this.inGame = false;
+    }
+
+    public Shot getPlayerShot() {
+        return shot;
     }
 
     private class GameCycle implements ActionListener {
