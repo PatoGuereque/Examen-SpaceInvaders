@@ -43,7 +43,7 @@ public class Assets {
         }
 
         //player
-        SpriteSheet playerSheet = new SpriteSheet(ImageLoader.loadImage("/images/spr.Player_Ship.png"));
+        SpriteSheet playerSheet = new SpriteSheet(ImageLoader.loadImage("/images/spr.PlayerShip.png"));
         playerIdle = new BufferedImage[2];
         playerLeft = new BufferedImage[2];
         playerRight = new BufferedImage[2];
